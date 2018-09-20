@@ -38,12 +38,12 @@ class TestDatasetLanguageIdentification(unittest.TestCase):
         PAD_index = 0
         collate_fn = lambda b: collate_seq_vectors(b, PAD_index)
 
-        dl_params_val = {
+        dl_params = {
             'batch_size' : 3,
             'collate_fn' : collate_fn,
             'shuffle' : False
         }
-        self.dl_lang_id = data.DataLoader(self.ds_lang_id, **dl_params_val)
+        self.dl_lang_id = data.DataLoader(self.ds_lang_id, **dl_params)
 
     def test_collate_seq_vectors(self):
         batch = next(iter(self.dl_lang_id))

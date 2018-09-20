@@ -1,6 +1,7 @@
 import unittest
 import mock
 import preprocess
+import train
 
 mocked_file_storage = {
 }
@@ -17,4 +18,5 @@ class TestPipeline(unittest.TestCase):
     @mock.patch('torch.save', side_effect = mock_torch_save)
     def test_pipeline(self, torch_save, torch_load):
         preprocess.main()
+        #train.main()
 
