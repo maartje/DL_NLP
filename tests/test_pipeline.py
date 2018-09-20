@@ -19,7 +19,7 @@ def mock_read_file(fpath):
     if fpath == 'data/wili-2018/x_train.txt':
         return [
             'Dit is een konijn',
-            'It is so nice to meet you'
+            'It is so nice to meet you',
             'Het is een mooie dag',
             'Hoe gaat het met je?',
             'I feel very happy',
@@ -57,6 +57,5 @@ class TestPipeline(unittest.TestCase):
     @mock.patch('torch.save', side_effect = mock_torch_save)
     def test_pipeline(self, torch_save, torch_load, read_file, save_file):
         preprocess.main()
-        #print(mocked_file_storage)
         train.main()
 

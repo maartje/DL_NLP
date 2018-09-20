@@ -12,6 +12,7 @@ def main():
         fpath_vectors_train, 
         fpath_labels_train
     )
+
     dl_params_train = {
         'batch_size' : batch_size,
         'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index),
@@ -19,6 +20,7 @@ def main():
     }
 
     dl_train = data.DataLoader(ds_train, **dl_params_train)
+    print(next(iter(dl_train)))
 
 
 if __name__ == "__main__":
