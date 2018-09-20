@@ -11,7 +11,7 @@ class DatasetLanguageIdentification(data.Dataset):
         super(DatasetLanguageIdentification, self).__init__()
         
         self.sequence_vectors = torch.load(fpath_vectors) 
-        self.labels = torch.load(fpath_labels)         
+        self.labels = torch.load(fpath_labels) # TODO: read pickle files        
 
     def __len__(self):
         return len(self.sequence_vectors)
