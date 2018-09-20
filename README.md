@@ -12,7 +12,7 @@ Open a terminal in the directory 'DL_NLP' and follow the steps below.
 **Step 1: create directory structure and prepare input files**
 
 ```console
-./prepare.sh
+$ ./prepare.sh
 ```
 
 The './prepare.sh' script creates a directory structure that is assumed by the subsequent steps.
