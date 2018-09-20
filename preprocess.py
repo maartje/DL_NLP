@@ -17,8 +17,8 @@ def build_vectors(sentences, fpath_vocab, fpath_vectors):
 
 def preprocess_labels():
     # TODO: read from files
-    targets_train = ['nld', 'eng', 'frn', 'eng'] 
-    targets_test = ['eng', 'nld'] 
+    labels_train = ['nld', 'eng', 'frn', 'eng'] 
+    labels_test = ['eng', 'nld'] 
 
     # TODO create dictionairies: 'label -> index' and 'index -> label'
 
@@ -28,6 +28,13 @@ def preprocess_labels():
     # - dictionairies, i.e. ( { 0 -> 'eng', ...} , {'eng' -> 0, ...})
     # - list of indices for training targets, i.e. [3,16, ...]
     # - list of indices for test targetts
+
+    targets_train = [1, 2, 3, 2] # TODO  
+    targets_test = [2, 1] # TODO
+
+    torch.save(targets_train, config.filepaths['targets_train'])
+    torch.save(targets_test, config.filepaths['targets_test'])
+
 
 def preprocess_texts():
     # TODO: read from files

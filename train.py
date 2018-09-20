@@ -4,7 +4,7 @@ import config
 
 def main():
     fpath_vectors_train = config.filepaths['vectors_train'] 
-    fpath_labels_train = config.filepaths['labels_train']
+    fpath_labels_train = config.filepaths['targets_train']
     PAD_index = config.settings['PAD_index']
     batch_size = config.settings['batch_size']
 
