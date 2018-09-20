@@ -18,14 +18,8 @@ def build_vectors(sentences, fpath_vocab, fpath_vectors):
 
 def preprocess_labels():
     # read targets from files
-    targets_train = []
-    targets_test = []
-    with open('data/wili-2018/y_train.txt') as f1:
-        for target in f1:
-            targets_train.append(target)
-    with open('data/wili-2018/y_test.txt') as f2:
-        for target in f2:
-            targets_train.append(target)
+    targets_train = read_file(config.filepaths['labels_train'])
+    targets_test = read_file(config.filepaths['labels_test'])
 
     # create dictionaries: 'label -> index' and 'index -> label',
     # i.e. ( { 0 -> 'eng', ...} , {'eng' -> 0, ...})
@@ -53,16 +47,16 @@ def preprocess_labels():
     with open('data/preprocess/targets_test_indices.pickle', 'wb') as h4:
         pickle.dump(targets_test_indices[0:10], h4, protocol=pickle.HIGHEST_PROTOCOL)
 
-def preprocess_texts():
-    sentences_train = []
-    with open('data/wili-2018/x_train.txt') as f3:
-        for sentence in f3:
-            sentences_train.append(sentence)
+def read_file(fpath):
+    lines = []
+    with open(fpath) as f1:
+        for line in f1:
+            lines.append(line)
+    return lines
 
-    sentences_test = []
-    with open('data/wili-2018/x_test.txt') as f4:
-        for sentence in f4:
-            sentences_test.append(sentence)
+def preprocess_texts():
+    sentences_train = read_file(config.filepaths['texts_train'])
+    sentences_test = read_file(config.filepaths['texts_test'])
 
     min_occurrence = config.settings['min_occurrence']
     fpath_vocab = config.filepaths['vocab']

@@ -7,6 +7,10 @@ filepaths = {
     'dir_evaluate' : 'data/evaluate',
 
     # input files
+    'labels_train' : 'data/wili-2018/y_train.txt',
+    'labels_test' : 'data/wili-2018/y_test.txt',
+    'texts_train' : 'data/wili-2018/x_train.txt',
+    'texts_test' : 'data/wili-2018/x_test.txt',
 
     # output preprocess
     'vocab' : 'data/preprocess/vocab.pt',
