@@ -40,12 +40,12 @@ def preprocess_labels():
     # Store in 'data/preprocess':
 
     # TODO: store dictionairies: label2index and index2label
+    save_file(targets_train_indices, config.filepaths['targets_train'])
+    save_file(targets_test_indices, config.filepaths['targets_test'])
 
-    with open('data/preprocess/targets_train_indices.pickle', 'wb') as h3:
-        pickle.dump(targets_train_indices, h3, protocol=pickle.HIGHEST_PROTOCOL)
-
-    with open('data/preprocess/targets_test_indices.pickle', 'wb') as h4:
-        pickle.dump(targets_test_indices, h4, protocol=pickle.HIGHEST_PROTOCOL)
+def save_file(data, fpath):
+    with open(fpath, 'wb') as f:
+        pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
 def read_file(fpath):
     lines = []

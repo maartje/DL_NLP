@@ -16,8 +16,8 @@ filepaths = {
     'vocab' : 'data/preprocess/vocab.pt',
     'vectors_train' : 'data/preprocess/vectors_train.pt',
     'vectors_test' : 'data/preprocess/vectors_test.pt',
-    'targets_train' : 'data/preprocess/targets_train.pt',
-    'targets_test' : 'data/preprocess/targets_test.pt',
+    'targets_train' : 'data/preprocess/targets_train_indices.pickle',
+    'targets_test' : 'data/preprocess/targets_test_indices.pickle',
 }
 
 settings = {
