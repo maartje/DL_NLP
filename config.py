@@ -11,15 +11,16 @@ filepaths = {
     # output preprocess
     'vocab' : 'data/preprocess/vocab.pt',
     'vectors_train' : 'data/preprocess/vectors_train.pt',
-    'vectors_val' : 'data/preprocess/vectors_val.pt',
     'vectors_test' : 'data/preprocess/vectors_test.pt'
 }
 
 settings = {
     # preprocess
-    'min_occurrence' : 2
+    'min_occurrence' : 2,
+    'PAD_index' : 0,
 
     # train
+    'batch_size' : 128
 
     # predict
 
