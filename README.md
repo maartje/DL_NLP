@@ -21,7 +21,7 @@ https://zenodo.org/record/841984/files/wili-2018.zip?download=1
 The './prepare.sh' script creates a directory structure that is assumed by the subsequent steps.
 
 After running the script, copy the input data that you want use 
-to the directory 'data/input'
+to the directory 'data/wili-2018'
 
 **Step 2: preprocessing**
 
