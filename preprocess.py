@@ -15,17 +15,28 @@ def build_vectors(sentences, fpath_vocab, fpath_vectors):
     ]
     torch.save(sentence_vectors, fpath_vectors)
 
-
-def main():
+def preprocess_labels():
     # TODO: read from files
-    sentences_train = ['hello', 'I am here!', 'this is interesting.'] 
-    sentences_val = ['hello', 'I like being here!'] 
-    sentences_test = ['hello world!', 'I am here!'] 
+    targets_train = ['nld', 'eng', 'frn', 'eng'] 
+    targets_test = ['eng', 'nld'] 
+
+    # TODO create dictionairies: 'label -> index' and 'index -> label'
+
+    # TODO convert targets_train and targets_test to list of indices
+
+    # TODO store in three different files in 'data/preprocess':
+    # - dictionairies, i.e. ( { 0 -> 'eng', ...} , {'eng' -> 0, ...})
+    # - list of indices for training targets, i.e. [3,16, ...]
+    # - list of indices for test targetts
+
+def preprocess_texts():
+    # TODO: read from files
+    sentences_train = ['Hallo wereld!', 'I am here!', 'je suis content.', 'I am happy.'] 
+    sentences_test = ['hello world!', 'Ik loop de trap op'] 
     
     min_occurrence = config.settings['min_occurrence']
     fpath_vocab = config.filepaths['vocab']
     fpath_vectors_train = config.filepaths['vectors_train']
-    fpath_vectors_val = config.filepaths['vectors_val']
     fpath_vectors_test = config.filepaths['vectors_test']
 
     # build vocab from training data
@@ -33,9 +44,12 @@ def main():
 
     # build sentence vectors for train, validation and test sets
     build_vectors(sentences_train, fpath_vocab, fpath_vectors_train)
-    build_vectors(sentences_val, fpath_vocab, fpath_vectors_val)
     build_vectors(sentences_test, fpath_vocab, fpath_vectors_test)
 
+
+def main():
+    preprocess_texts()
+    preprocess_labels()
 
 if __name__ == "__main__":
     main()
