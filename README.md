@@ -1,6 +1,7 @@
 # Tasks
 
 * Implement basic pipeline (for RNN model) [Maartje]
+* implement TODOs in 'preprocess.py' (reading file data and creating dictionairies for labels)
 * Implement a script to select texts that share the same character set 
 (for now it is enough to select all latin character texts by target language)
 * Find literature on neural language recognition
