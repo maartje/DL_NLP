@@ -1,4 +1,6 @@
 # Running the unit tests
 
-.../DL_NLP$ python -m unittest discover -v
+Open a terminal in the directory 'DL_NLP' and run the command
+
+$ python -m unittest discover -v
 
