@@ -1,4 +1,4 @@
-from src.preprocessing.vocabulary import Vocabulary
+from src.preprocess.vocabulary import Vocabulary
 from itertools import chain
 
 class TextMapper:

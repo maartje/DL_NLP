@@ -3,7 +3,7 @@ Tests for the vocabulary containing the index and inverted index
 """
 
 import unittest
-from src.preprocessing.vocabulary import Vocabulary
+from src.preprocess.vocabulary import Vocabulary
 
 class TestVocabulary(unittest.TestCase):
 

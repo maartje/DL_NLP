@@ -3,8 +3,8 @@ Tests for the text mapper that maps words to indices and indices to words
 """
 
 import unittest
-from src.preprocessing.textmapper import TextMapper
-from src.preprocessing.tokenizer import CharacterTokenizer
+from src.preprocess.textmapper import TextMapper
+from src.preprocess.tokenizer import CharacterTokenizer
 
 class TestTextMapper(unittest.TestCase):
 

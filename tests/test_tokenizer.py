@@ -3,7 +3,7 @@ Tests for the text processor that tokenizes and preprocesses the text
 """
 
 import unittest
-from src.preprocessing.tokenizer import CharacterTokenizer
+from src.preprocess.tokenizer import CharacterTokenizer
 
 class TestTokenizer(unittest.TestCase):
     
