@@ -42,17 +42,17 @@ def preprocess_labels():
     # TODO: store dictionairies: label2index and index2label
 
     with open('data/preprocess/targets_train_indices.pickle', 'wb') as h3:
-        pickle.dump(targets_train_indices[0:10], h3, protocol=pickle.HIGHEST_PROTOCOL)
+        pickle.dump(targets_train_indices, h3, protocol=pickle.HIGHEST_PROTOCOL)
 
     with open('data/preprocess/targets_test_indices.pickle', 'wb') as h4:
-        pickle.dump(targets_test_indices[0:10], h4, protocol=pickle.HIGHEST_PROTOCOL)
+        pickle.dump(targets_test_indices, h4, protocol=pickle.HIGHEST_PROTOCOL)
 
 def read_file(fpath):
     lines = []
     with open(fpath) as f1:
         for line in f1:
             lines.append(line)
-    return lines
+    return lines[0:10] #TODO: temporarily we only read lines 0 to 10
 
 def preprocess_texts():
     sentences_train = read_file(config.filepaths['texts_train'])
@@ -64,11 +64,11 @@ def preprocess_texts():
     fpath_vectors_test = config.filepaths['vectors_test']
 
     # build vocab from training data
-    build_vocabulary(sentences_train[0:10], min_occurrence, fpath_vocab)
+    build_vocabulary(sentences_train, min_occurrence, fpath_vocab)
 
     # build sentence vectors for train, validation and test sets
-    build_vectors(sentences_train[0:10], fpath_vocab, fpath_vectors_train)
-    build_vectors(sentences_test[0:10], fpath_vocab, fpath_vectors_test)
+    build_vectors(sentences_train, fpath_vocab, fpath_vectors_train)
+    build_vectors(sentences_test, fpath_vocab, fpath_vectors_test)
 
 
 def main():
