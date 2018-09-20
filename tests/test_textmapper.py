@@ -12,17 +12,16 @@ class TestTextMapper(unittest.TestCase):
         sentences = ['Hello world!', 'Hello Foo.']
         self.mapper = TextMapper(CharacterTokenizer())
         self.mapper.build_vocabulary(sentences, 2)
-        
+
+    def test_index_special_tokens(self):
+        self.assertEqual(self.mapper.PAD_index(), 0)
+        self.assertEqual(self.mapper.UNKNOWN_index(), 1)
+
     def test_sentence2indices(self):
-        sentence = 'hello!'
+        sentence = 'helXlo'
         indices = self.mapper.sentence2indices(sentence)
-        SOS_index = self.mapper.vocab.word2index[self.mapper.SOS]
-        EOS_index = self.mapper.EOS_index()
-        UNKNOWN_index = self.mapper.vocab.word2index[self.mapper.UNKNOWN]
                 
-        self.assertEqual(SOS_index, indices[0])
-        self.assertEqual(UNKNOWN_index, indices[-2])
-        self.assertEqual(EOS_index, indices[-1])
+        self.assertEqual(self.mapper.UNKNOWN_index(), indices[3])
 
     def test_indices2sentence(self):
         sentence = 'helXlo'
