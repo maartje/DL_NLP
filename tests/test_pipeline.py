@@ -2,6 +2,7 @@ import unittest
 import mock
 import preprocess
 import train
+import config
 
 mocked_file_storage = {
 }
@@ -56,6 +57,15 @@ class TestPipeline(unittest.TestCase):
     @mock.patch('torch.load', side_effect = mock_torch_load)
     @mock.patch('torch.save', side_effect = mock_torch_save)
     def test_pipeline(self, torch_save, torch_load, read_file, save_file):
+        self.configure_for_testing()
         preprocess.main()
         train.main()
+
+    def configure_for_testing(self):
+        # config.settings['rnn'] = {}
+        config.settings['rnn']['emb_size'] = 64
+        config.settings['rnn']['hidden_size'] = 256
+        config.settings['rnn']['drop_out'] = 0.3
+        config.settings['rnn']['learning_rate'] = 1.
+        config.settings['rnn']['epochs'] = 50
 

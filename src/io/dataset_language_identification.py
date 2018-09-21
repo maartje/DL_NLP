@@ -38,6 +38,7 @@ def collate_seq_vectors(batch, PAD_index):
     sequences_collated_sorted = sequences_collated[sort_indices]
     
     targets = transposed[1]
+    targets = [(sp != PAD_index).to(dtype=torch.long) * t.item() for sp, t in zip(sequences_padded, targets)]
     targets_collated_sorted = default_collate(targets)[sort_indices]
 
     return [

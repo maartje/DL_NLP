@@ -26,7 +26,14 @@ settings = {
     'PAD_index' : 0,
 
     # train
-    'batch_size' : 128
+    'rnn' : {
+        'batch_size' : 128,
+        'learning_rate' : 0.5,
+        'epochs' : 50,
+        'emb_size' : 64,
+        'hidden_size' : 256,
+        'drop_out' : 0.3
+    }
 
     # predict
 

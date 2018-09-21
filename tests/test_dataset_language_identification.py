@@ -53,7 +53,11 @@ class TestDatasetLanguageIdentification(unittest.TestCase):
             [7,8,2,5,6,6,7,1,0,0,0,0],
             [3,2,7,5,1,0,0,0,0,0,0,0]
         ]
-        expected_targets = [1,3,4]
+        expected_targets = [ # targets for each character, sorted and padded
+            [1,1,1,1,1,1,1,1,1,1,1,1],
+            [3,3,3,3,3,3,3,3,0,0,0,0],
+            [4,4,4,4,4,0,0,0,0,0,0,0]
+        ]
         expected_seq_lengths = [12,8,5]
         self.assertTrue(np.array_equal(batch[0], expected_sequences))
         self.assertTrue(np.array_equal(batch[1], expected_targets))

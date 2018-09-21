@@ -1,9 +1,9 @@
 def process_labels(targets_train, targets_test):
     # create dictionaries: 'label -> index' and 'index -> label',
     # i.e. ( { 0 -> 'eng', ...} , {'eng' -> 0, ...})
-    label_to_index = {}
+    label_to_index = {'PAD' : 0}
     all_labels = targets_train + targets_test
-    index = 0
+    index = 1
     for label in all_labels:
         if label in label_to_index: continue
         label_to_index[label] = index
