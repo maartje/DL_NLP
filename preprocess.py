@@ -22,16 +22,15 @@ def preprocess_targets():
     targets_train = read_file(config.filepaths['labels_train'])
     targets_test = read_file(config.filepaths['labels_test'])
 
-
     # Store in 'data/preprocess':
     (
         targets_train_indices, 
         targets_test_indices, 
-        label_to_index, 
-        index_to_label
+        label2index,
+        index2label
     ) = process_labels(targets_train, targets_test)
 
-    # TODO: store dictionairies: label2index and index2label
+    # TODO: store dictionaries: label2index and index2label
     save_file(targets_train_indices, config.filepaths['targets_train'])
     save_file(targets_test_indices, config.filepaths['targets_test'])
 
