@@ -51,7 +51,7 @@ def predict(model, test_data):
             log_probs_batches.append(log_probs)
             targets_batches.append(targets) 
             lengths_batches.append(lengths) 
-    all_log_probs = torch.cat(log_probs_batches, dim=0)
+    all_log_probs = torch.cat(log_probs_batches, dim=0) # TODO: does not work because batches have different seq length :(
     all_targets = torch.cat(targets_batches, dim=0)
     all_lengths = torch.cat(lengths_batches, dim=0)
     return all_log_probs, all_targets, all_lengths
