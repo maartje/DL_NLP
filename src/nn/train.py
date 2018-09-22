@@ -24,7 +24,6 @@ def fit(model, train_data, loss_criterion, optimizer,
             loss.backward()
             optimizer.step()
             batch_losses.append(loss.item())
-            print(loss.item())
         for fn_on_epoch_completed in fn_epoch_listeners:
             fn_on_epoch_completed(epoch, batch_losses)
         

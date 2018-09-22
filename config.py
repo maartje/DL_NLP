@@ -18,6 +18,9 @@ filepaths = {
     'vectors_test' : 'data/preprocess/vectors_test.pt',
     'targets_train' : 'data/preprocess/targets_train_indices.pickle',
     'targets_test' : 'data/preprocess/targets_test_indices.pickle',
+
+    # output train
+    'epoch_losses' :'data/train/epoch_losses.pt'
 }
 
 settings = {

@@ -41,11 +41,3 @@ def mock_save_file(data, fpath):
 def mock_read_file(fpath):
     return mocked_file_storage[fpath]
 
-# fn_steps are 'main()' functions
-# make sure to use the mock functions
-def perform_steps(fn_steps = []): 
-    for fn_step in fn_steps:
-        fn_step()
-
-
-
