@@ -20,7 +20,12 @@ filepaths = {
     'targets_test' : 'data/preprocess/targets_test_indices.pickle',
 
     # output train
-    'epoch_losses' :'data/train/epoch_losses.pt'
+    'epoch_losses' : 'data/train/epoch_losses.pt',
+    'model' : 'data/train/model.pt',
+
+    # output predict
+    'predictions_train' : 'data/predict/test.pt',
+    'predictions_test'  : 'data/predict/train.pt'
 }
 
 settings = {

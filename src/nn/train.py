@@ -27,19 +27,32 @@ def fit(model, train_data, loss_criterion, optimizer,
         for fn_on_epoch_completed in fn_epoch_listeners:
             fn_on_epoch_completed(epoch, batch_losses)
         
-# def predict(model, user_idxs, movie_idxs):
-#     """Predict language probabilities for texts."""
-#     model.eval() # set in predict mode
-#     with torch.no_grad():
-#         predicted_ratings = model(user_idxs, movie_idxs).squeeze()
-#     return predicted_ratings
+def predict(model, test_data):
+    """ Predicts the probabilities of the target classes.
+    
+    Args:
+        model: Language Identification Model
+        test_data: iterator over batches of testdata
 
-# def calculate_loss(model, dataset, loss_criterion):
-#     """Calculate average loss over dataset without auto grad."""
-#     dl = data.DataLoader(dataset, batch_size = len(dataset))
-#     full_dataset = next(iter(dl))
-#     (user_idxs, movie_idxs, target_ratings) = full_dataset
-#     with torch.no_grad():
-#         predicted_ratings = predict(model, user_idxs, movie_idxs)
-#         loss = loss_criterion(predicted_ratings, target_ratings.float())
-#     return loss.item()
+    Returns:
+        log probabilities [BatchSize x Max-SequenceLength x NrOfTargetClasses]
+        targets [BatchSize x Max-SequenceLength] (0 is used for padding)
+        lengths [BatchSize]
+    """
+    model.eval() # set in predict mode
+
+    log_probs_batches = [] # BatchSize x Max-SequenceLength x TargetClasses
+    targets_batches = []   # BatchSize x Max-SequenceLength (0 is used for padding)
+    lengths_batches = []   # BatchSize
+    with torch.no_grad():
+        for _, batch in enumerate(test_data):
+            (seq_vectors, targets, lengths) = batch
+            log_probs = model(seq_vectors, lengths)  
+            log_probs_batches.append(log_probs)
+            targets_batches.append(targets) 
+            lengths_batches.append(lengths) 
+    all_log_probs = torch.cat(log_probs_batches, dim=0)
+    all_targets = torch.cat(targets_batches, dim=0)
+    all_lengths = torch.cat(lengths_batches, dim=0)
+    return all_log_probs, all_targets, all_lengths
+

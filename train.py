@@ -52,6 +52,8 @@ def main():
         trainOutputWriter.print_epoch_info
     ])
 
+    # save model and train data
+    torch.save(model, config.filepaths['model'])
     torch.save({
         'train_losses' : lossCollector.train_losses,
         'val_losses' : lossCollector.val_losses # TODO
