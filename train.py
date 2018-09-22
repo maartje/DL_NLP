@@ -18,7 +18,8 @@ def main():
     # initialize data loader
     ds_train = DatasetLanguageIdentification(
         fpath_vectors_train, 
-        fpath_labels_train
+        fpath_labels_train,
+        config.settings['max_seq_length']
     )
     dl_params_train = {
         'batch_size' : batch_size,

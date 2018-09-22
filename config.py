@@ -29,6 +29,7 @@ settings = {
     'PAD_index' : 0,
 
     # train
+    'max_seq_length' : 25, 
     'rnn' : {
         'batch_size' : 128,
         'learning_rate' : 0.5,

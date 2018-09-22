@@ -7,17 +7,19 @@ import math
 
 class DatasetLanguageIdentification(data.Dataset):
 
-    def __init__(self, fpath_vectors, fpath_labels):
+    def __init__(self, fpath_vectors, fpath_labels, max_seq_length):
         super(DatasetLanguageIdentification, self).__init__()
         
         self.sequence_vectors = torch.load(fpath_vectors) 
         self.labels = torch.load(fpath_labels) # TODO: read pickle files        
+        self.max_seq_length = max_seq_length
 
     def __len__(self):
         return len(self.sequence_vectors)
 
     def __getitem__(self, index):
-        input_seq = torch.tensor(self.sequence_vectors[index], dtype=torch.long)
+        input_seq = self.sequence_vectors[index][:self.max_seq_length]
+        input_seq = torch.tensor(input_seq, dtype=torch.long)
         target = torch.tensor(self.labels[index], dtype=torch.long)
         return input_seq, target
 

@@ -15,7 +15,7 @@ def mock_torch_load(fpath):
     if fpath == fpath_vectors:
         return [
             [3,2,7,5,1], # the indices of the tokens in the sentence
-            [8,2,2,7,9,9,6,5,7,6,4,1],
+            [8,2,2,7,9,9,6,5,7,6,4,1,3,3,4],
             [7,8,2,5,6,6,7,1],
             [8,5,2,7,9,4,6,5,6,2,1]
         ]
@@ -33,7 +33,8 @@ class TestDatasetLanguageIdentification(unittest.TestCase):
     def setUp(self, torch_load):
         self.ds_lang_id = DatasetLanguageIdentification(
             fpath_vectors, 
-            fpath_labels
+            fpath_labels,
+            12
         )
         PAD_index = 0
         collate_fn = lambda b: collate_seq_vectors(b, PAD_index)
