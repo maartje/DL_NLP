@@ -3,14 +3,14 @@ import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 
 class LanguageRecognitionRNN(nn.Module):
-    def __init__(self, emb_size, hidden_size, output_size, pad_index, drop_out):
+    def __init__(self, vocab_size, hidden_size, output_size, pad_index, drop_out):
         super(LanguageRecognitionRNN, self).__init__()
-        self.emb_size = emb_size
+        self.vocab_size = vocab_size
         self.hidden_size = hidden_size
         self.output_size = output_size
         self.pad_index = pad_index
 
-        self.embedding = nn.Embedding(self.emb_size, self.hidden_size)
+        self.embedding = nn.Embedding(self.vocab_size, self.hidden_size)
         self.lstm = nn.LSTM(self.hidden_size, self.hidden_size, batch_first=True)
         self.out = nn.Linear(self.hidden_size, self.output_size)
         self.logsoftmax = nn.LogSoftmax(dim=2) # TODO: or cross entropy loss?

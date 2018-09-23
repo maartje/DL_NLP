@@ -31,8 +31,9 @@ def preprocess_targets(targets_train, targets_test):
     save_file(targets_test_indices, config.filepaths['targets_test'])
 
 def save_file(data, fpath):
-    with open(fpath, 'wb') as f:
-        pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+    torch.save(data, fpath)
+    # with open(fpath, 'wb') as f:
+    #     pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
 def load_data(fpath_x, fpath_y, lang_filter):
     def read_data(fpath_x, fpath_y, lang_filter):

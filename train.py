@@ -29,12 +29,12 @@ def main():
     dl_train = data.DataLoader(ds_train, **dl_params_train)
 
     # initialize RNN model and train settings
-    emb_size = config.settings['rnn']['emb_size'] 
+    vocab_size = torch.load(config.filepaths['vocab']).vocab.n_words 
     hidden_size = config.settings['rnn']['hidden_size'] 
     output_size = 3 # nr of languages + 1 for padding (pass as a parameter read from label dict)
     drop_out = config.settings['rnn']['drop_out'] 
     model = LanguageRecognitionRNN(
-        emb_size, hidden_size, output_size, PAD_index, drop_out)
+        vocab_size, hidden_size, output_size, PAD_index, drop_out)
 
     # initialize train settings for RNN model
     learning_rate = config.settings['rnn']['learning_rate'] 

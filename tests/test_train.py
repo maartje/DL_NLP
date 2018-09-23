@@ -28,7 +28,6 @@ class TestTrain(unittest.TestCase):
 
 
     def configure_for_testing(self):
-        config.settings['rnn']['emb_size'] = 64
         config.settings['rnn']['hidden_size'] = 256
         config.settings['rnn']['drop_out'] = 0.3
         config.settings['rnn']['learning_rate'] = 1.

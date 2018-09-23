@@ -37,10 +37,9 @@ settings = {
     # train
     'max_seq_length' : 25, 
     'rnn' : {
-        'batch_size' : 128,
+        'batch_size' : 4,
         'learning_rate' : 0.5,
-        'epochs' : 50,
-        'emb_size' : 64,
+        'epochs' : 2,
         'hidden_size' : 256,
         'drop_out' : 0.3
     }
