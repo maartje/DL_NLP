@@ -8,6 +8,8 @@ import torch.optim as optim
 from src.reporting.loss_collector import LossCollector
 from src.reporting.train_output_writer import TrainOutputWriter
 import torch
+from torch.utils.data.dataset import random_split
+import math
 
 def main():
     fpath_vectors_train = config.filepaths['vectors_train'] 
@@ -16,7 +18,7 @@ def main():
     batch_size = config.settings['rnn']['batch_size']
 
     # initialize data loader
-    ds_train = DatasetLanguageIdentification(
+    ds = DatasetLanguageIdentification(
         fpath_vectors_train, 
         fpath_labels_train,
         config.settings['max_seq_length']
@@ -26,7 +28,20 @@ def main():
         'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index),
         'shuffle' : True
     }
+    dl_params_val = {
+        'batch_size' : batch_size, # or setting?
+        'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index),
+        'shuffle' : False
+    }
+
+    val_size = math.ceil(0.1 * len(ds))
+    train_size = len(ds) - val_size
+
+    ds_train, ds_val = random_split(
+        ds, [train_size, val_size])
+
     dl_train = data.DataLoader(ds_train, **dl_params_train)
+    dl_val = data.DataLoader(ds_val, **dl_params_val)
 
     # initialize RNN model and train settings
     vocab_size = torch.load(config.filepaths['vocab']).vocab.n_words 
@@ -43,12 +58,14 @@ def main():
     epochs = config.settings['rnn']['epochs'] 
 
     # collect information during training
-    lossCollector = LossCollector()
+    lossCollector = LossCollector(
+        model, dl_val, loss
+    )
     trainOutputWriter = TrainOutputWriter(lossCollector)
 
     # fit RNN model
     fit(model, dl_train, loss, optimizer, epochs, [
-        lossCollector.store_train_loss,
+        lossCollector.store_metrics,
         trainOutputWriter.print_epoch_info
     ])
 
