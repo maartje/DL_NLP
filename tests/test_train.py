@@ -12,7 +12,7 @@ class TestTrain(unittest.TestCase):
 
     @mock.patch('builtins.print')
     @mock.patch('preprocess.save_file', side_effect = mfs.mock_save_file)
-    @mock.patch('preprocess.read_file', side_effect = mfs.mock_read_file)
+    @mock.patch('preprocess.load_data', side_effect = mfs.mock_load_data)
     @mock.patch('torch.load', side_effect = mfs.mock_torch_load)
     @mock.patch('torch.save', side_effect = mfs.mock_torch_save)
     def test_train(self, torch_save, torch_load, read_file, save_file, prnt = None):

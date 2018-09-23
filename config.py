@@ -30,6 +30,7 @@ filepaths = {
 
 settings = {
     # preprocess
+    'language_filter' : 'test',
     'min_occurrence' : 2,
     'PAD_index' : 0,
 
@@ -47,4 +48,8 @@ settings = {
     # predict
 
     # evaluate
+}
+
+language_filters = {
+    'test' : ['nld', 'eng']
 }

@@ -19,7 +19,7 @@ def calculate_loss(log_probs, targets, PAD_index):
     # TODO might be insightfull to show average loss per string position
     # this might be possible using "reduction = 'none'" and some clever
     # reshaping so that we do reduce over batches but not over positions 
-    return loss
+    return loss.item()
 
 if __name__ == "__main__":
     main()

@@ -17,12 +17,8 @@ def build_vectors(sentences, fpath_vocab, fpath_vectors):
     ]
     torch.save(sentence_vectors, fpath_vectors)
 
-def preprocess_targets():
-    # read targets from files
-    targets_train = read_file(config.filepaths['labels_train'])
-    targets_test = read_file(config.filepaths['labels_test'])
-
-    # Store in 'data/preprocess':
+def preprocess_targets(targets_train, targets_test):
+    # create dictionairies for target values and transform labels into indices
     (
         targets_train_indices, 
         targets_test_indices, 
@@ -30,7 +26,7 @@ def preprocess_targets():
         index2label
     ) = process_labels(targets_train, targets_test)
 
-    # TODO: store dictionaries: label2index and index2label
+    # TODO: store dictionaries: label2index and index2label in 'data/preprocess'
     save_file(targets_train_indices, config.filepaths['targets_train'])
     save_file(targets_test_indices, config.filepaths['targets_test'])
 
@@ -38,17 +34,20 @@ def save_file(data, fpath):
     with open(fpath, 'wb') as f:
         pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
 
-def read_file(fpath):
-    lines = []
-    with open(fpath) as f1:
-        for line in f1:
-            lines.append(line)
-    return lines[0:10] #TODO: temporarily we only read lines 0 to 10
+def load_data(fpath_x, fpath_y, lang_filter):
+    def read_data(fpath_x, fpath_y, lang_filter):
+        with open(fpath_x, ) as x:
+            with open(fpath_y) as y:
+                for text, target in zip(x,y):
+                    if target.strip() in lang_filter:
+                        yield (text.strip(), target.strip())    
+    data = list(read_data(fpath_x, fpath_y, lang_filter))
+    data_unzipped = list(zip(*data))
+    x_data = list(data_unzipped[0])
+    y_data = list(data_unzipped[1])
+    return x_data, y_data 
 
-def preprocess_texts():
-    sentences_train = read_file(config.filepaths['texts_train'])
-    sentences_test = read_file(config.filepaths['texts_test'])
-
+def preprocess_texts(sentences_train, sentences_test):
     min_occurrence = config.settings['min_occurrence']
     fpath_vocab = config.filepaths['vocab']
     fpath_vectors_train = config.filepaths['vectors_train']
@@ -61,10 +60,15 @@ def preprocess_texts():
     build_vectors(sentences_train, fpath_vocab, fpath_vectors_train)
     build_vectors(sentences_test, fpath_vocab, fpath_vectors_test)
 
-
 def main():
-    preprocess_texts()
-    preprocess_targets()
+    lang_filter_setting = config.settings['language_filter']
+    lang_filter = config.language_filters[lang_filter_setting]
+    x_train, y_train = load_data(
+        config.filepaths['texts_train'], config.filepaths['labels_train'], lang_filter)
+    x_test, y_test = load_data(
+        config.filepaths['texts_test'], config.filepaths['labels_test'], lang_filter)
+    preprocess_texts(x_train, x_test)
+    preprocess_targets(y_train, y_test)
 
 if __name__ == "__main__":
     main()

@@ -38,6 +38,5 @@ def mock_torch_save(data, fpath):
 def mock_save_file(data, fpath):
     mocked_file_storage[fpath] = data
 
-def mock_read_file(fpath):
-    return mocked_file_storage[fpath]
-
+def mock_load_data(fpath_x, fpath_y, lang_filter):
+    return mocked_file_storage[fpath_x], mocked_file_storage[fpath_y]
