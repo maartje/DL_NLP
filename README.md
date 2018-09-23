@@ -5,8 +5,6 @@
     * TODO in 'preprocess.py' (store dict for labels)
     * TODO in 'src/io/dataset_language_identification' (read labels)
 * specify two language filters in config (e.g. latin- and chinese- character languages)
-* Implement a script to select texts that share the same character set 
-(for now it is enough to select all latin character texts by target language)
 * Find literature on neural language recognition
 
 # DONE
