@@ -32,7 +32,7 @@ settings = {
     # preprocess
     'language_filter' : 'test',
     'min_occurrence' : 2,
-    'PAD_index' : 0,
+    'PAD_index' : 0, # DO NOT CHANGE THIS!
 
     # train
     'max_seq_length' : 25, 

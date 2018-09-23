@@ -17,6 +17,7 @@ class TestPipeline(unittest.TestCase):
         pipeline.main()
 
     def configure_for_testing(self):
+        config.settings['rnn']['batch_size'] = 2
         config.settings['rnn']['hidden_size'] = 256
         config.settings['rnn']['drop_out'] = 0.3
         config.settings['rnn']['learning_rate'] = 1.

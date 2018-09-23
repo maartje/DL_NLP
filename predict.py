@@ -30,8 +30,8 @@ def main():
     )
     model = torch.load(config.filepaths['model'])
 
-    test_results = predict(model, dl_test)
-    train_results = predict(model, dl_train)
+    test_results = predict(model, dl_test, config.settings['max_seq_length'])
+    train_results = predict(model, dl_train, config.settings['max_seq_length'])
 
     torch.save(test_results, config.filepaths['predictions_test'])
     torch.save(train_results, config.filepaths['predictions_train'])

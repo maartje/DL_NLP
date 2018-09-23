@@ -59,7 +59,7 @@ def main():
 
     # collect information during training
     lossCollector = LossCollector(
-        model, dl_val, loss
+        model, dl_val, config.settings['max_seq_length'], loss
     )
     trainOutputWriter = TrainOutputWriter(lossCollector)
 
