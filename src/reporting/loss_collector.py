@@ -1,5 +1,6 @@
 import numpy as np
 from src.nn.train import predict
+from src.reporting.metrics import *
 
 class LossCollector(object):
 
@@ -11,26 +12,23 @@ class LossCollector(object):
 
         self.train_losses = []
         self.val_losses = [] 
-        self.initial_val_loss = self.calculate_val_loss()
+        self.initial_val_loss = self.calculate_metrics()
 
     def store_metrics(self, epoch, batch_losses):
         self.store_train_loss(epoch, batch_losses)
-        self.store_val_loss(epoch, batch_losses)
-        #self.store_val_accuracy(self, epoch, batch_losses)
+        val_loss = self.calculate_metrics() # TODO accuracy
+        self.val_losses.append(val_loss)
 
     def store_train_loss(self, epoch, batch_losses):
         """Collect average train loss after epoch has completed."""
         train_loss = np.mean(batch_losses)
         self.train_losses.append(train_loss)
 
-    def store_val_loss(self, epoch, batch_losses):
-        """Collect validation loss after epoch has completed."""
-        self.val_losses.append(self.calculate_val_loss())
-
-    def calculate_val_loss(self):
+    def calculate_metrics(self):
         (log_probs, targets, _) = predict(self.model, self.val_data, self.max_length)
-        val_loss = self.loss_criterion(log_probs.permute(0,2,1), targets)
-        return val_loss.item()
+        val_loss = calculate_loss(log_probs, targets, self.loss_criterion)
+        # TODO: return also accuracy: np.mean(calculate_accuracies(log_probs, targets, lengths)) 
+        return val_loss
 
     def store_val_accuracy(self, epoch, batch_losses):
         """Collect validation accuracy after epoch has completed."""

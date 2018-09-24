@@ -60,6 +60,7 @@ def predict(model, test_data, max_length):
             log_probs_batches.append(log_probs_padded)
             targets_batches.append(targets_padded) 
             lengths_batches.append(lengths) 
+            
     all_log_probs = torch.cat(log_probs_batches, dim=0) 
     all_targets = torch.cat(targets_batches, dim=0)     
     all_lengths = torch.cat(lengths_batches, dim=0)
