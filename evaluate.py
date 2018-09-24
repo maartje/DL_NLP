@@ -18,5 +18,9 @@ def main():
     print('train_loss', train_loss)
     print('test_loss', test_loss)
 
+    epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
+    print('epoch metrics', epoch_metrics)
+    # TODO: plot the metrics to file
+
 if __name__ == "__main__":
     main()

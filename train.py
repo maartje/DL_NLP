@@ -10,6 +10,7 @@ from src.reporting.train_output_writer import TrainOutputWriter
 import torch
 from torch.utils.data.dataset import random_split
 import math
+from src.model_saver import ModelSaver
 
 def main():
     fpath_vectors_train = config.filepaths['vectors_train'] 
@@ -63,19 +64,22 @@ def main():
     )
     trainOutputWriter = TrainOutputWriter(metricsCollector)
 
+    modelSaver = ModelSaver(
+        model, metricsCollector, config.filepaths['model'])
+
     # fit RNN model
     fit(model, dl_train, loss, optimizer, epochs, [
         metricsCollector.store_metrics,
-        trainOutputWriter.print_epoch_info
+        trainOutputWriter.print_epoch_info,
+        modelSaver.save_best_model
     ])
 
-    # save model and train data
-    torch.save(model, config.filepaths['model'])
+    # save metrics collected during training
     torch.save({
         'train_losses' : metricsCollector.train_losses,
         'val_losses' : metricsCollector.val_losses 
         # TODO: accuracies
-    }, config.filepaths['epoch_losses'])
+    }, config.filepaths['epoch_metrics'])
 
 
 if __name__ == "__main__":

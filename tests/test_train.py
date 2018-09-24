@@ -6,7 +6,7 @@ import predict
 import evaluate
 import config
 import tests.mock_file_system as mfs
-
+import numpy as np
 
 class TestTrain(unittest.TestCase):
 
@@ -21,7 +21,7 @@ class TestTrain(unittest.TestCase):
         train.main()
 
         step_size = 20 # robustness: make sure train loss decreases after 20 epochs
-        train_losses = mfs.mocked_file_storage[config.filepaths['epoch_losses']]['train_losses']
+        train_losses = mfs.mocked_file_storage[config.filepaths['epoch_metrics']]['train_losses']
         train_losses_step = train_losses[::step_size]
         is_decreasing = lambda l: all(l[i] > l[i+1] for i in range(len(l)-1))
         self.assertTrue(is_decreasing(train_losses_step))
@@ -32,4 +32,6 @@ class TestTrain(unittest.TestCase):
         config.settings['rnn']['drop_out'] = 0.3
         config.settings['rnn']['learning_rate'] = 1.
         config.settings['rnn']['epochs'] = 61
+        np.random.seed(42)
+
 

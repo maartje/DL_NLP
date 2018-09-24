@@ -3,7 +3,7 @@ class TrainOutputWriter(object):
         self.lossCollector = lossCollector
         # TODO accuracy on validation set
 
-    def print_epoch_info(self, epoch, batch_losses):
+    def print_epoch_info(self, epoch, _):
         """
         Print train and validation loss after epoch. 
         Call this function after 'lossCollector.store_train_loss'.

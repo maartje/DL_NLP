@@ -14,12 +14,13 @@ class MetricsCollector(object):
         self.val_losses = [] 
         self.initial_val_loss = self.calculate_metrics()
 
-    def store_metrics(self, epoch, batch_losses):
-        self.store_train_loss(epoch, batch_losses)
-        val_loss = self.calculate_metrics() # TODO accuracy
+    def store_metrics(self, _, batch_losses):
+        self.store_train_loss(batch_losses)
+        val_loss = self.calculate_metrics() 
         self.val_losses.append(val_loss)
+        # TODO store accuracy
 
-    def store_train_loss(self, epoch, batch_losses):
+    def store_train_loss(self, batch_losses):
         """Collect average train loss after epoch has completed."""
         train_loss = np.mean(batch_losses)
         self.train_losses.append(train_loss)
@@ -29,7 +30,3 @@ class MetricsCollector(object):
         val_loss = calculate_loss(log_probs, targets, self.loss_criterion)
         # TODO: return also accuracy: np.mean(calculate_accuracies(log_probs, targets, lengths)) 
         return val_loss
-
-    def store_val_accuracy(self, epoch, batch_losses):
-        """Collect validation accuracy after epoch has completed."""
-        raise NotImplementedError
