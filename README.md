@@ -7,10 +7,10 @@
     * in evaluate.py and src/reporting/plots.py: 1. plot accuracies collected during training and 2. plot accuracy per character position for our best model
 * plot **confusion matrix**: evaluate.py, src/reporting/metrics (for the calculation), src/reporting/plots.py
 * specify two **language filters** in config.py (e.g. latin- and chinese- character languages, see language_filters['test'] for an example)
-* train the model (preferable on GPU) for the latin character languages and **experiment with hyper parameters** (learning rate, max_seq_length, ...)
-* we need to compare the model to something: find results in literature and/or implement some sort of simple baseline model and hang it in the pipeline.
+* **train** the model (preferable on GPU) for the latin character languages and **experiment with hyper parameters** (learning rate, max_seq_length, ...)
+* we need to compare the model to something: find results in literature and/or implement some sort of simple **baseline model** and hang it in the pipeline.
 
-* Find literature on neural language recognition
+* Find **scientific papers** on neural language recognition
 
 # DONE
 * Setup the pipeline [Maartje]
