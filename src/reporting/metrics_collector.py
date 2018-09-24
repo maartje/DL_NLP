@@ -12,7 +12,11 @@ class MetricsCollector(object):
 
         self.train_losses = []
         self.val_losses = [] 
-        self.initial_val_loss = self.calculate_metrics()
+
+        # store initial metrics on validation set
+        initial_val_loss = self.calculate_metrics()
+        self.val_losses.append(initial_val_loss)
+        # TODO accuracy
 
     def store_metrics(self, _, batch_losses):
         self.store_train_loss(batch_losses)

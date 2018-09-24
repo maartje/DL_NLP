@@ -29,6 +29,7 @@ def preprocess_targets(targets_train, targets_test):
     # TODO: store dictionaries: label2index and index2label in 'data/preprocess'
     save_file(targets_train_indices, config.filepaths['targets_train'])
     save_file(targets_test_indices, config.filepaths['targets_test'])
+    save_file((label2index, index2label), config.filepaths['targets_dictionairies'])
 
 def save_file(data, fpath):
     torch.save(data, fpath)

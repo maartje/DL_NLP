@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import config
 from src.reporting.metrics import *
+from src.reporting.plots import *
 
 def main():
     PAD_index = config.settings['PAD_index']
@@ -21,6 +22,13 @@ def main():
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
     print('epoch metrics', epoch_metrics)
     # TODO: plot the metrics to file
+
+    epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
+    plot_epoch_losses(
+        epoch_metrics['train_losses'], 
+        epoch_metrics['val_losses'], 
+        config.filepaths['plot_epoch_losses']
+    )
 
 if __name__ == "__main__":
     main()

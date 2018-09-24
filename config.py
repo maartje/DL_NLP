@@ -16,8 +16,9 @@ filepaths = {
     'vocab' : 'data/preprocess/vocab.pt',
     'vectors_train' : 'data/preprocess/vectors_train.pt',
     'vectors_test' : 'data/preprocess/vectors_test.pt',
-    'targets_train' : 'data/preprocess/targets_train_indices.pickle',
-    'targets_test' : 'data/preprocess/targets_test_indices.pickle',
+    'targets_train' : 'data/preprocess/targets_train_indices.pt',
+    'targets_test' : 'data/preprocess/targets_test_indices.pt',
+    'targets_dictionairies' : 'data/preprocess/targets_dictionairies.pt', 
 
     # output train
     'epoch_metrics' : 'data/train/epoch_metrics.pt',
@@ -25,7 +26,11 @@ filepaths = {
 
     # output predict
     'predictions_train' : 'data/predict/test.pt',
-    'predictions_test'  : 'data/predict/train.pt'
+    'predictions_test'  : 'data/predict/train.pt',
+
+    # output evaluate
+    'plot_epoch_losses' : 'data/evaluate/plot_epoch_losses.png'
+
 }
 
 settings = {

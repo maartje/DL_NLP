@@ -1,14 +1,35 @@
 # Tasks
 
-* Implement basic pipeline (for RNN model) [Maartje]
-* implement preprocessing labels [Kwesi]
-    * TODO in 'preprocess.py' (store dict for labels)
-    * TODO in 'src/io/dataset_language_identification' (read labels)
-* specify two language filters in config (e.g. latin- and chinese- character languages)
+* Implement **accuracy metric**:
+    * calculate average accuracy per character position in 'src/reporting/metrics: calculate_accuracies'
+    * collect average accuracy over all char positions during training (src/reporting/metrics_collector, see also validation loss)
+    * use accuracy over validation set as criterion for selecting the best model in src/model_saver (instead of val_loss)
+    * in evaluate.py and src/reporting/plots.py: 1. plot accuracies collected during training and 2. plot accuracy per character position for our best model
+* plot **confusion matrix**: evaluate.py, src/reporting/metrics (for the calculation), src/reporting/plots.py
+* specify two **language filters** in config.py (e.g. latin- and chinese- character languages, see language_filters['test'] for an example)
+* train the model (preferable on GPU) for the latin character languages and **experiment with hyper parameters** (learning rate, max_seq_length, ...)
+* we need to compare the model to something: find results in literature and/or implement some sort of simple baseline model and hang it in the pipeline.
+
 * Find literature on neural language recognition
 
 # DONE
-* (efficiently) filter on language character group [Maartje]
+* Setup the pipeline [Maartje]
+* Implement preprocess for texts [Maartje]
+* Implement RNN model [Maartje]
+* Implement dataloading (for RNN model) [Maartje]
+* Implement train and predict [Maartje]
+* collect validation loss and save best model during training [Maartje]
+* Plot train and validation loss [Maartje]
+* Filter on language character group [Maartje]
+* implement preprocessing labels [Kwesi]
+
+# Running the unit tests
+
+Open a terminal in the directory 'DL_NLP' and run the command
+
+```console
+$ python -m unittest discover -v
+```
 
 # Running the pipeline
 
@@ -55,26 +76,21 @@ We currently use characters as tokens.
 The preprocessing output files are written to the directory 'data/preprocess'.
 
 The 'train.py' script trains a RNN model for language recognition.
-The model and loss per epoch diagrams are written to the
-directory 'data/preprocess'.
+The model and losses per epoch data are written to the
+directory 'data/train'.
 
 The 'predict.py' script creates the predicted probabilities for the test
 (and train) dataset using the trained model.
 For convenience the predicted probabilities are stored
 together with the target values and the sentence lengths.
+The output files are in 'data/predict'.
 
-The 'evaluate.py' produces the following output:
-- metrics such as accuracy (per text position)
-- confusion matrices
-- plots such as train and validation loss
-- qualitative evaluation
+The 'evaluate.py' produces evaluation output used in the report:
+- plots such as: train/validation loss per epoch, 
+                 validation accuracy per epoch, 
+                 test accuracy per character position
+- confusion matrix
+- scores for: train/test loss, average train/test accuracy 
 - ...
 
-# Running the unit tests
-
-Open a terminal in the directory 'DL_NLP' and run the command
-
-```console
-$ python -m unittest discover -v
-```
 

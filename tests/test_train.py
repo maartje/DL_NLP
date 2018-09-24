@@ -6,7 +6,7 @@ import predict
 import evaluate
 import config
 import tests.mock_file_system as mfs
-import numpy as np
+import torch
 
 class TestTrain(unittest.TestCase):
 
@@ -32,6 +32,6 @@ class TestTrain(unittest.TestCase):
         config.settings['rnn']['drop_out'] = 0.3
         config.settings['rnn']['learning_rate'] = 1.
         config.settings['rnn']['epochs'] = 61
-        np.random.seed(42)
+        torch.manual_seed(7)
 
 

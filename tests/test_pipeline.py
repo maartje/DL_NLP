@@ -12,7 +12,8 @@ class TestPipeline(unittest.TestCase):
     @mock.patch('preprocess.load_data', side_effect = mfs.mock_load_data)
     @mock.patch('torch.load', side_effect = mfs.mock_torch_load)
     @mock.patch('torch.save', side_effect = mfs.mock_torch_save)
-    def test_pipeline(self, torch_save, torch_load, read_file, save_file, prnt = None):
+    @mock.patch('matplotlib.pyplot.savefig')
+    def test_pipeline(self, save_fig, torch_save, torch_load, read_file, save_file, prnt = None):
         self.configure_for_testing()
         pipeline.main()
 
