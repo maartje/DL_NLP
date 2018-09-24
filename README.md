@@ -23,6 +23,10 @@
 * Filter on language character group [Maartje]
 * implement preprocessing labels [Kwesi]
 
+# Installation
+
+* install pytorch, matplotlib, ...
+
 # Running the unit tests
 
 Open a terminal in the directory 'DL_NLP' and run the command
@@ -92,5 +96,6 @@ The 'evaluate.py' produces evaluation output used in the report:
 - confusion matrix
 - scores for: train/test loss, average train/test accuracy 
 - ...
+The output files are stored in 'data/evaluate'.
 
 
