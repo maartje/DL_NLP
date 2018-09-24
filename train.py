@@ -5,7 +5,7 @@ from src.nn.rnn_model import LanguageRecognitionRNN
 from src.nn.train import fit
 import torch.nn as nn
 import torch.optim as optim
-from src.reporting.loss_collector import LossCollector
+from src.reporting.metrics_collector import MetricsCollector
 from src.reporting.train_output_writer import TrainOutputWriter
 import torch
 from torch.utils.data.dataset import random_split
@@ -58,22 +58,23 @@ def main():
     epochs = config.settings['rnn']['epochs'] 
 
     # collect information during training
-    lossCollector = LossCollector(
+    metricsCollector = MetricsCollector(
         model, dl_val, config.settings['max_seq_length'], loss
     )
-    trainOutputWriter = TrainOutputWriter(lossCollector)
+    trainOutputWriter = TrainOutputWriter(metricsCollector)
 
     # fit RNN model
     fit(model, dl_train, loss, optimizer, epochs, [
-        lossCollector.store_metrics,
+        metricsCollector.store_metrics,
         trainOutputWriter.print_epoch_info
     ])
 
     # save model and train data
     torch.save(model, config.filepaths['model'])
     torch.save({
-        'train_losses' : lossCollector.train_losses,
-        'val_losses' : lossCollector.val_losses # TODO
+        'train_losses' : metricsCollector.train_losses,
+        'val_losses' : metricsCollector.val_losses 
+        # TODO: accuracies
     }, config.filepaths['epoch_losses'])
 
 

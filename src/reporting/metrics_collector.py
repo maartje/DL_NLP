@@ -2,7 +2,7 @@ import numpy as np
 from src.nn.train import predict
 from src.reporting.metrics import *
 
-class LossCollector(object):
+class MetricsCollector(object):
 
     def __init__(self, model, val_data, max_length, loss_criterion):
         self.model = model
