@@ -15,6 +15,8 @@
 
 * experiment with using **words instead of characters** (even though they are not easy to compare). This basically means that you have to plug in another tokenizer (separate by space instead of just split all characters.). 
 
+* Experiment with **alternative models**: may be a feed forward NN or a CNN with a fixed sequence length. That is: predict the langage after exactly n characters.
+
 # DONE
 * Setup the pipeline [Maartje]
 * Implement preprocess for texts [Maartje]
