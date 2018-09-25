@@ -33,5 +33,10 @@ def main():
         config.filepaths['plot_epoch_losses']
     )
 
+    plot_accuracy_per_position(
+        accuracy_test, 
+        accuracy_train, 
+        config.filepaths['plot_accuracy_seq_length'])
+
 if __name__ == "__main__":
     main()

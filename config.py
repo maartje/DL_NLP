@@ -29,8 +29,8 @@ filepaths = {
     'predictions_test'  : 'data/predict/train.pt',
 
     # output evaluate
-    'plot_epoch_losses' : 'data/evaluate/plot_epoch_losses.png'
-
+    'plot_epoch_losses' : 'data/evaluate/plot_epoch_losses.png',
+    'plot_accuracy_seq_length' : 'data/evaluate/plot_seq_acc.png'
 }
 
 settings = {
