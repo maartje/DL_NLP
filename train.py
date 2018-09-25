@@ -77,8 +77,8 @@ def main():
     # save metrics collected during training
     torch.save({
         'train_losses' : metricsCollector.train_losses,
-        'val_losses' : metricsCollector.val_losses 
-        # TODO: accuracies
+        'val_losses' : metricsCollector.val_losses,
+        'val_accuracies' : metricsCollector.val_accuracies
     }, config.filepaths['epoch_metrics'])
 
 

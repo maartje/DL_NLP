@@ -12,6 +12,16 @@ def plot_epoch_losses(train_losses, val_losses, fname):
     _ = plt.savefig(fname)
     plt.close()
 
+def plot_epoch_accuracies(val_accuracies, fname):
+    """Plot validation accuracy for each epoch.""" 
+    plt.plot(val_accuracies, 'ro-', color='red', label='validation accuracy after epoch')
+    plt.xlabel('#epochs')
+    plt.ylabel('avg. accuracy')
+    plt.legend()
+    plt.title('Average accuracy per epoch over all examples and all sequence positions')
+    _ = plt.savefig(fname)
+    plt.close()
+
 def plot_accuracy_per_position(accuracies_test, accuracies_train, fname):
     """Plot accuracies per position in sequence.""" 
     plt.plot(accuracies_train, 'ro-', color='blue', label='train')

@@ -16,15 +16,13 @@ def main():
     accuracy_test  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
     accuracy_train  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy(), t_axis=0)
 
-    print('train_loss', train_loss)
-    print('train_accuracy', accuracy_train)
+    print('avg. train_loss', train_loss)
+    print('avg. train_accuracy', accuracy_train.mean())
 
-    print('test_loss', test_loss)
-    print('test_accuracy', accuracy_test)
+    print('avg. test_loss', test_loss)
+    print('avg. test_accuracy', accuracy_test.mean())
 
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
-    print('epoch metrics', epoch_metrics)
-    # TODO: plot the metrics to file
 
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
     plot_epoch_losses(
@@ -32,6 +30,7 @@ def main():
         epoch_metrics['val_losses'], 
         config.filepaths['plot_epoch_losses']
     )
+    plot_epoch_accuracies(epoch_metrics['val_accuracies'], config.filepaths['plot_epoch_accuracies'])
 
     plot_accuracy_per_position(
         accuracy_test, 
