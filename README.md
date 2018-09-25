@@ -1,10 +1,5 @@
 # Tasks
 
-* Implement **accuracy metric**:
-    * calculate average accuracy per character position in 'src/reporting/metrics: calculate_accuracies'
-    * collect average accuracy over all char positions during training (src/reporting/metrics_collector, see also validation loss)
-    * use accuracy over validation set as criterion for selecting the best model in src/model_saver (instead of val_loss)
-    * in evaluate.py and src/reporting/plots.py: 1. plot accuracies collected during training and 2. plot accuracy per character position for our best model
 * plot **confusion matrix**: evaluate.py, src/reporting/metrics (for the calculation), src/reporting/plots.py
 * specify two **language filters** in config.py (e.g. latin- and chinese- character languages, see language_filters['test'] for an example)
 * **train** the model (preferable on GPU) for the latin character languages and **experiment with hyper parameters** (learning rate, max_seq_length, ...)
@@ -27,6 +22,12 @@
 * Plot train and validation loss [Maartje]
 * Filter on language character group [Maartje]
 * implement preprocessing labels [Kwesi]
+
+* Implement **accuracy metric**: [Maartje]
+    * calculate average accuracy per character position in 'src/reporting/metrics: calculate_accuracies'
+    * collect average accuracy over all char positions during training (src/reporting/metrics_collector, see also validation loss)
+    * use accuracy over validation set as criterion for selecting the best model in src/model_saver (instead of val_loss)
+    * in evaluate.py and src/reporting/plots.py: 1. plot accuracies collected during training and 2. plot accuracy per character position for our best model
 
 # Installation
 
