@@ -13,11 +13,14 @@ def main():
     train_loss = calculate_loss(log_probs_train, targets_train, nll_loss)
     test_loss = calculate_loss(log_probs_test, targets_test, nll_loss)
 
-    # TODO accuracy_test  = calculate_accuracies(log_probs_test, targets_test, lengths)
-    # TODO accuracy_train = calculate_accuracies(log_probs_test, targets_test, lengths)
+    accuracy_test  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
+    accuracy_train  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy(), t_axis=0)
 
     print('train_loss', train_loss)
+    print('train_accuracy', accuracy_train)
+
     print('test_loss', test_loss)
+    print('test_accuracy', accuracy_test)
 
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
     print('epoch metrics', epoch_metrics)
