@@ -4,8 +4,6 @@
 * specify two **language filters** in config.py (e.g. latin- and chinese- character languages, see language_filters['test'] for an example)
 * **train** the model (preferable on GPU) for the latin character languages and **experiment with hyper parameters** (learning rate, max_seq_length, ...)
 
-* we need to compare the model to something: find results in literature and/or implement some sort of simple **baseline model** and hang it in the pipeline.
-
 * Find **scientific papers** on neural language recognition
 
 * experiment with using **words instead of characters** (even though they are not easy to compare). This basically means that you have to plug in another tokenizer (separate by space instead of just split all characters.). 
@@ -22,7 +20,7 @@
 * Plot train and validation loss [Maartje]
 * Filter on language character group [Maartje]
 * implement preprocessing labels [Kwesi]
-
+* implement tf-idf with naive bayes as a **baseline model** and hang it in the pipeline. [Maartje]
 * Implement **accuracy metric**: [Maartje]
     * calculate average accuracy per character position in 'src/reporting/metrics: calculate_accuracies'
     * collect average accuracy over all char positions during training (src/reporting/metrics_collector, see also validation loss)
