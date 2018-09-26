@@ -30,12 +30,21 @@ def main():
         epoch_metrics['val_losses'], 
         config.filepaths['plot_epoch_losses']
     )
-    plot_epoch_accuracies(epoch_metrics['val_accuracies'], config.filepaths['plot_epoch_accuracies'])
+    plot_epoch_accuracies(
+        epoch_metrics['val_accuracies'], 
+        config.filepaths['plot_epoch_accuracies'])
 
     plot_accuracy_per_position(
-        accuracy_test, 
-        accuracy_train, 
+        [accuracy_test, accuracy_train],
+        ['RNN test', 'RNN train'], 
         config.filepaths['plot_accuracy_seq_length'])
+        
+    accuracies_test_tfidf = torch.load(config.filepaths['tf_idf_test_accuracies'])
+    plot_accuracy_per_position(
+        [accuracy_test, accuracies_test_tfidf],
+        ['RNN', 'TFIDF'], 
+        config.filepaths['plot_accuracy_model_comparison'])
+
 
 if __name__ == "__main__":
     main()

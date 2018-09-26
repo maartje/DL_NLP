@@ -29,9 +29,11 @@ filepaths = {
     'predictions_test'  : 'data/predict/train.pt',
 
     # output evaluate
+    'tf_idf_test_accuracies' : 'data/evaluate/tf_idf_test_accuracies.pt',
     'plot_epoch_losses' : 'data/evaluate/plot_epoch_losses.png',
     'plot_epoch_accuracies' : 'data/evaluate/plot_epoch_accuracies.png',
-    'plot_accuracy_seq_length' : 'data/evaluate/plot_seq_acc.png'
+    'plot_accuracy_seq_length' : 'data/evaluate/plot_seq_acc.png',
+    'plot_accuracy_model_comparison' : 'data/evaluate/plot_accuracy_model_comparison.png'
 }
 
 settings = {
