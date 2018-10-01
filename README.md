@@ -2,11 +2,11 @@
 
 * plot **confusion matrix**: evaluate.py, src/reporting/metrics (for the calculation), src/reporting/plots.py
 * specify two **language filters** in config.py (e.g. latin- and chinese- character languages, see language_filters['test'] for an example)
-* **train** the model (preferable on GPU) for the latin character languages and **experiment with hyper parameters** (learning rate, max_seq_length, ...)
+* **train** the model (preferable on GPU) for the latin character languages and **experiment with hyper parameters** (learning rate, max_seq_length, ...) [Basak]
 
 * Find **scientific papers** on neural language recognition
 
-* experiment with using **words instead of characters** (even though they are not easy to compare). This basically means that you have to plug in another tokenizer (separate by space instead of just split all characters.). 
+* experiment with using **words instead of characters** (even though they are not easy to compare). This basically means that you have to plug in another tokenizer (separate by space instead of just split all characters.). [Basak]
 
 * Experiment with **alternative models**: may be a feed forward NN or a CNN with a fixed sequence length. That is: predict the langage after exactly n characters.
 
