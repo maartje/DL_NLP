@@ -76,6 +76,18 @@ def split_in_fragments(texts, targets, tokenizer, max_length):
     return new_texts, new_targets
 
 
+def max_length_check(x_test, y_test, max_length):
+    x_new = []
+    y_new = []
+    for i , s in enumerate(x_test):
+        s = s.split(" ")
+        if  len(s) >= max_length:
+            x_new.append(' '.join(s))
+            y_new.append(y_test[i])
+
+    return x_new, y_new
+
+
 def main():
     lang_filter_setting = config.settings['language_filter']
     lang_filter = config.language_filters[lang_filter_setting]
@@ -91,11 +103,19 @@ def main():
     x_test, y_test = load_data(
         config.filepaths['texts_test'], config.filepaths['labels_test'], lang_filter)
     max_length = config.settings['max_seq_length']
-    if config.settings['use_all_fragments']:
-        x_train, y_train = split_in_fragments(x_train, y_train, tokenizer, max_length)
-    else:
-        x_train = [tokenizer.get_prefix_fragment(s, max_length) for s in x_train]
-    x_test = [tokenizer.get_prefix_fragment(s, max_length) for s in x_test] # we test on prefixes only
+
+
+    #if model == 'word':
+    #    x_test, y_test = max_length_check(x_test, y_test, max_length)
+
+    if model == 'char':
+
+        if config.settings['use_all_fragments']:
+            x_train, y_train = split_in_fragments(x_train, y_train, tokenizer, max_length)
+        else:
+            x_train = [tokenizer.get_prefix_fragment(s, max_length) for s in x_train]
+
+        x_test = [tokenizer.get_prefix_fragment(s, max_length) for s in x_test] # we test on prefixes only
     preprocess_texts(x_train, x_test, tokenizer)
     preprocess_targets(y_train, y_test)
 

@@ -46,8 +46,8 @@ settings = {
     # train
     'val_train_ratio' : 0.1,
     'use_all_fragments' : False, # warning: if this setting is True and characters are used: each fragement results in many sub fragments (use GPU) 
-    'max_seq_length' : 25, 
-    'check_equal_seq_length' : True, # use True for now since padding is not supported yet in accuracy calculation
+    'max_seq_length' : 20, 
+    'check_equal_seq_length' : False, # use True for now since padding is not supported yet in accuracy calculation
     'rnn' : {
         'batch_size' : 4,
         'learning_rate' : 0.5,
@@ -62,7 +62,7 @@ settings = {
 }
 
 language_filters = {
-    'test'     : ['nld', 'eng'],
+    'test'     : ['nld', 'eng', 'fra', 'ita', 'deu'],
     'latin'    : ['ace', 'afr', 'als', 'ang', 'arg', 'ast', 'aym', 'aze', 'bar', 'bcl', 'bjn',
                   'bre', 'cat', 'cbk', 'ceb', 'ces', 'cor', 'cos', 'csb', 'cym', 'dan', 'deu', 'diq', 'dsb',
                   'egl', 'eng', 'epo', 'est', 'eus', 'ext', 'fao', 'fin', 'fra', 'frp', 'fry', 'fur', 'gla',
