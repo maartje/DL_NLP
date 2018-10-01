@@ -5,8 +5,8 @@ import torch
 import config
 import pickle
 
-def build_vocabulary(sentences_train, min_occurence, fpath_vocab):
-    mapper = TextMapper(CharacterTokenizer())
+def build_vocabulary(sentences_train, min_occurence, tokenizer, fpath_vocab):
+    mapper = TextMapper(tokenizer)
     mapper.build_vocabulary(sentences_train, min_occurence)
     torch.save(mapper, fpath_vocab)
 
@@ -49,27 +49,46 @@ def load_data(fpath_x, fpath_y, lang_filter):
     y_data = list(data_unzipped[1])
     return x_data, y_data 
 
-def preprocess_texts(sentences_train, sentences_test):
+def preprocess_texts(sentences_train, sentences_test, tokenizer):
     min_occurrence = config.settings['min_occurrence']
     fpath_vocab = config.filepaths['vocab']
     fpath_vectors_train = config.filepaths['vectors_train']
     fpath_vectors_test = config.filepaths['vectors_test']
 
     # build vocab from training data
-    build_vocabulary(sentences_train, min_occurrence, fpath_vocab)
+    build_vocabulary(sentences_train, min_occurrence, tokenizer, fpath_vocab)
 
     # build sentence vectors for train, validation and test sets
     build_vectors(sentences_train, fpath_vocab, fpath_vectors_train)
     build_vectors(sentences_test, fpath_vocab, fpath_vectors_test)
 
+def split_in_fragments(texts, targets, tokenizer, max_length):
+    new_texts = []
+    new_targets = []
+    for txt, trg in zip(texts, targets):
+        fragments = tokenizer.get_all_fragments(txt, max_length)
+        for frgm in fragments:
+            new_texts.append(frgm)
+            new_targets.append(trg)
+    return new_texts, new_targets
+
+
 def main():
     lang_filter_setting = config.settings['language_filter']
     lang_filter = config.language_filters[lang_filter_setting]
+    tokenizer = CharacterTokenizer()
     x_train, y_train = load_data(
         config.filepaths['texts_train'], config.filepaths['labels_train'], lang_filter)
+    print(len(x_train))
     x_test, y_test = load_data(
         config.filepaths['texts_test'], config.filepaths['labels_test'], lang_filter)
-    preprocess_texts(x_train, x_test)
+    max_length = config.settings['max_seq_length']
+    if config.settings['use_all_fragments']:
+        x_train, y_train = split_in_fragments(x_train, y_train, tokenizer, max_length)
+    else:
+        x_train = [tokenizer.get_prefix_fragment(s, max_length) for s in x_train]
+    x_test = [tokenizer.get_prefix_fragment(s, max_length) for s in x_test] # we test on prefixes only
+    preprocess_texts(x_train, x_test, tokenizer)
     preprocess_targets(y_train, y_test)
 
 if __name__ == "__main__":
