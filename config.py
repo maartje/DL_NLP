@@ -51,7 +51,7 @@ settings = {
     'rnn' : {
         'batch_size' : 4,
         'learning_rate' : 0.5,
-        'epochs' : 1,
+        'epochs' : 10,
         'hidden_size' : 256,
         'drop_out' : 0.3
     }
