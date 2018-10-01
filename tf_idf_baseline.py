@@ -32,7 +32,11 @@ def main():
     
     # calculate accuracies pre position
     def accuracy_at_position(texts, targets, position):
-        texts_cutoff = [t[0:position]for t in texts]
+        if config.settings['model'] == 'word':
+            texts_cutoff =  [' '.join(t.split(" ")[0:position]) for t in texts_test]
+        else:
+            texts_cutoff = [t[0:position]for t in texts]
+
         predicted = pipeline.predict(texts_cutoff)
         results = (np.array(targets) == predicted)
         return results.sum()/len(results) 
