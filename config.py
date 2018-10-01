@@ -43,6 +43,7 @@ settings = {
     'PAD_index' : 0, # DO NOT CHANGE THIS!
 
     # train
+    'val_train_ratio' : 0.1,
     'use_all_fragments' : False, # warning: if this setting is True and characters are used: each fragement results in many sub fragments (use GPU) 
     'max_seq_length' : 25, 
     'check_equal_seq_length' : True, # use True for now since padding is not supported yet in accuracy calculation
