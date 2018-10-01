@@ -26,16 +26,16 @@ def main():
     )
     dl_params_train = {
         'batch_size' : batch_size,
-        'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index, config.settings['check_equal_seq_length']),
+        'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index, False),
         'shuffle' : True
     }
     dl_params_val = {
         'batch_size' : batch_size, # or setting?
-        'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index, config.settings['check_equal_seq_length']),
+        'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index, False),
         'shuffle' : False
     }
 
-    val_size = math.ceil(0.1 * len(ds))
+    val_size = math.ceil(config.settings['val_train_ratio'] * len(ds))
     train_size = len(ds) - val_size
 
     ds_train, ds_val = random_split(
