@@ -58,7 +58,7 @@ settings = {
 }
 
 language_filters = {
-    'test'     : ['nld', 'eng']
+    'test'     : ['nld', 'eng'],
     'latin'    : ['ace', 'afr', 'als', 'ang', 'arg', 'ast', 'aym', 'aze', 'bar', 'bcl', 'bjn',
                   'bre', 'cat', 'cbk', 'ceb', 'ces', 'cor', 'cos', 'csb', 'cym', 'dan', 'deu', 'diq', 'dsb',
                   'egl', 'eng', 'epo', 'est', 'eus', 'ext', 'fao', 'fin', 'fra', 'frp', 'fry', 'fur', 'gla',
@@ -68,8 +68,8 @@ language_filters = {
                   'nld', 'nno', 'nob', 'nrm', 'nso', 'oci', 'olo', 'pag', 'pam', 'pap', 'pcd', 'pdc', 'pfl', 
                   'pol', 'por', 'que', 'roh', 'ron', 'rup', 'scn', 'sco', 'sgs', 'slk', 'slv', 'sme', 'sna',
                   'spa', 'sqi', 'srd', 'srn', 'stq', 'swa', 'swe', 'szl', 'tet', 'ton', 'tsn', 'vec', 'vep', 
-                  'vls', 'vol', 'vro', 'war', 'wln', 'xho', 'yor', 'zea']
+                  'vls', 'vol', 'vro', 'war', 'wln', 'xho', 'yor', 'zea'],
     'cyrillic' : ['ava', 'bak', 'be-tarask', 'bel', 'bul', 'bxr', 'che', 'chv', 'crh', 'kaa', 'koi', 'krc', 
-                  'mdf', 'mhr', 'mkd', 'mrj', 'myv', 'oss', 'rue', 'rus', 'sah', 'tat', 'tyv', 'ukr']
+                  'mdf', 'mhr', 'mkd', 'mrj', 'myv', 'oss', 'rue', 'rus', 'sah', 'tat', 'tyv', 'ukr'],
     'arabic'   : ['ara', 'arz', 'azb', 'ckb', 'fas', 'glk', 'lrc', 'mzn', 'pnb', 'urd']
 }
