@@ -37,7 +37,7 @@ class TestDatasetLanguageIdentification(unittest.TestCase):
             12
         )
         PAD_index = 0
-        collate_fn = lambda b: collate_seq_vectors(b, PAD_index)
+        collate_fn = lambda b: collate_seq_vectors(b, PAD_index, False)
 
         dl_params = {
             'batch_size' : 3,

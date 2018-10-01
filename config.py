@@ -44,6 +44,7 @@ settings = {
 
     # train
     'max_seq_length' : 25, 
+    'check_equal_seq_length' : True, # use True for now since padding is not supported yet in accuracy calculation
     'rnn' : {
         'batch_size' : 4,
         'learning_rate' : 0.5,

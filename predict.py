@@ -14,7 +14,7 @@ def build_dataloader(fpath_vectors, fpath_labels):
     )
     dl_params = {
         'batch_size' : batch_size,
-        'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index),
+        'collate_fn' : lambda b: collate_seq_vectors(b, PAD_index, config.settings['check_equal_seq_length']),
         'shuffle' : False
     }
     return data.DataLoader(ds, **dl_params)

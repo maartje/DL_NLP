@@ -23,7 +23,7 @@ class DatasetLanguageIdentification(data.Dataset):
         target = torch.tensor(self.labels[index], dtype=torch.long)
         return input_seq, target
 
-def collate_seq_vectors(batch, PAD_index):   
+def collate_seq_vectors(batch, PAD_index, check_for_equal_length = True):   
     transposed = list(zip(*batch))
 
     # pad, sort and stack
@@ -31,6 +31,9 @@ def collate_seq_vectors(batch, PAD_index):
     sequence_lengths = np.array([len(c) for c in sequences])
     sort_indices = np.argsort(sequence_lengths)[::-1].copy()
     max_length = max(sequence_lengths)
+
+    if check_for_equal_length:
+        assert np.all(np.equal(sequence_lengths,max_length)), "Sequences of different length are not fully support (yet)"
     
     sequences_padded = [
         torch.cat(
