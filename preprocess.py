@@ -79,7 +79,6 @@ def main():
     tokenizer = CharacterTokenizer()
     x_train, y_train = load_data(
         config.filepaths['texts_train'], config.filepaths['labels_train'], lang_filter)
-    print(len(x_train))
     x_test, y_test = load_data(
         config.filepaths['texts_test'], config.filepaths['labels_test'], lang_filter)
     max_length = config.settings['max_seq_length']
