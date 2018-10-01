@@ -1,9 +1,12 @@
 from src.preprocess.textmapper import TextMapper
 from src.preprocess.tokenizer import CharacterTokenizer
+from src.preprocess.tokenizer import WordTokenizer
 from src.preprocess.process_labels import process_labels
 import torch
 import config
 import pickle
+
+
 
 def build_vocabulary(sentences_train, min_occurence, tokenizer, fpath_vocab):
     mapper = TextMapper(tokenizer)
@@ -76,7 +79,13 @@ def split_in_fragments(texts, targets, tokenizer, max_length):
 def main():
     lang_filter_setting = config.settings['language_filter']
     lang_filter = config.language_filters[lang_filter_setting]
-    tokenizer = CharacterTokenizer()
+    model =  config.settings['model'] # char or word
+
+    if model == 'char':
+        tokenizer = CharacterTokenizer()
+    else:
+        tokenizer = WordTokenizer()
+
     x_train, y_train = load_data(
         config.filepaths['texts_train'], config.filepaths['labels_train'], lang_filter)
     x_test, y_test = load_data(

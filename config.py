@@ -38,6 +38,7 @@ filepaths = {
 
 settings = {
     # preprocess
+    'model' : 'word', #or char
     'language_filter' : 'test',
     'min_occurrence' : 2,
     'PAD_index' : 0, # DO NOT CHANGE THIS!
@@ -49,7 +50,7 @@ settings = {
     'rnn' : {
         'batch_size' : 4,
         'learning_rate' : 0.5,
-        'epochs' : 10,
+        'epochs' : 1,
         'hidden_size' : 256,
         'drop_out' : 0.3
     }
