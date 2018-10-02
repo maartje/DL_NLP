@@ -13,7 +13,7 @@ from torch.utils.data.dataset import random_split
 import math
 from src.model_saver import ModelSaver
 
-def main(learning_rate):
+def main():
     fpath_vectors_train = config.filepaths['vectors_train'] 
     fpath_labels_train = config.filepaths['targets_train']
     PAD_index = config.settings['PAD_index']
