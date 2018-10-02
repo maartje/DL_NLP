@@ -24,8 +24,8 @@ class TestMetrics(unittest.TestCase):
             [2, 2, 2, 2]
         ])
 
-        counts_confusion_matrix = calculate_confusion_matrix(probs, targets, counts=True)
-        percentage_confusion_matrix = calculate_confusion_matrix(probs, targets, counts=False)
+        counts_confusion_matrix = calculate_confusion_matrix(probs, targets, counts=True)[0]
+        percentage_confusion_matrix = calculate_confusion_matrix(probs, targets, counts=False)[0]
 
         self.assertTrue(np.array_equal(counts_confusion_matrix, [[1, 2, 1], [1, 0, 3]]))
         self.assertTrue(np.array_equal(percentage_confusion_matrix, [[0.25, 0.5, 0.25], [0.25, 0.0, 0.75]]))

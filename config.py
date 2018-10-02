@@ -18,7 +18,7 @@ filepaths = {
     'vectors_test' : 'data/preprocess/vectors_test.pt',
     'targets_train' : 'data/preprocess/targets_train_indices.pt',
     'targets_test' : 'data/preprocess/targets_test_indices.pt',
-    'targets_dictionairies' : 'data/preprocess/targets_dictionairies.pt', 
+    'targets_dictionaries' : 'data/preprocess/targets_dictionaries.pt', 
 
     # output train
     'epoch_metrics' : 'data/train/epoch_metrics.pt',

@@ -21,7 +21,7 @@ def build_vectors(sentences, fpath_vocab, fpath_vectors):
     torch.save(sentence_vectors, fpath_vectors)
 
 def preprocess_targets(targets_train, targets_test):
-    # create dictionairies for target values and transform labels into indices
+    # create dictionaries for target values and transform labels into indices
     (
         targets_train_indices, 
         targets_test_indices, 
@@ -32,7 +32,7 @@ def preprocess_targets(targets_train, targets_test):
     # TODO: store dictionaries: label2index and index2label in 'data/preprocess'
     save_file(targets_train_indices, config.filepaths['targets_train'])
     save_file(targets_test_indices, config.filepaths['targets_test'])
-    save_file((label2index, index2label), config.filepaths['targets_dictionairies'])
+    save_file((label2index, index2label), config.filepaths['targets_dictionaries'])
 
 def save_file(data, fpath):
     torch.save(data, fpath)
