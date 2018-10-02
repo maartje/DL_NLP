@@ -108,14 +108,13 @@ def main():
     #if model == 'word':
     #    x_test, y_test = max_length_check(x_test, y_test, max_length)
 
-    if model == 'char':
 
-        if config.settings['use_all_fragments']:
-            x_train, y_train = split_in_fragments(x_train, y_train, tokenizer, max_length)
-        else:
-            x_train = [tokenizer.get_prefix_fragment(s, max_length) for s in x_train]
+    if config.settings['use_all_fragments']:
+        x_train, y_train = split_in_fragments(x_train, y_train, tokenizer, max_length)
+    else:
+        x_train = [tokenizer.get_prefix_fragment(s, max_length) for s in x_train]
 
-        x_test = [tokenizer.get_prefix_fragment(s, max_length) for s in x_test] # we test on prefixes only
+    x_test = [tokenizer.get_prefix_fragment(s, max_length) for s in x_test] # we test on prefixes only
     preprocess_texts(x_train, x_test, tokenizer)
     preprocess_targets(y_train, y_test)
 
