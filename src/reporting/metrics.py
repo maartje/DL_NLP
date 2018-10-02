@@ -1,10 +1,11 @@
 import numpy.ma as ma
+from sklearn.metrics import confusion_matrix
 
 def calculate_loss(log_probs, targets, loss_criterion):
     loss = loss_criterion(log_probs.permute(0,2,1), targets)
     return loss.item()
 
-def calculate_accuracy(probs, targets, t_axis=None):
+def calculate_accuracy(log_probs, targets, t_axis=None):
     """
     Calculates the average accuracy (ignoring the paddings)
 
@@ -23,10 +24,34 @@ def calculate_accuracy(probs, targets, t_axis=None):
     mask = targets == 0
     masked_targets = ma.MaskedArray(targets, mask)
 
-    
-    predictions = probs.argmax(axis=2) 
+    predictions = log_probs.argmax(axis=2)
     masked_predictions = ma.MaskedArray(predictions, mask)
 
     corrects = (masked_predictions == masked_targets).sum(axis=t_axis)
     totals = ma.count(masked_targets, axis=t_axis)
     return corrects / totals
+
+
+def calculate_confusion_matrix(log_probs, targets, counts=False):
+    """
+    Calculates the confusion matrix (ignoring the paddings)
+
+    With 'N' the batch_size, 'S' the max character sequence length and 'O' the nr of output classes
+    Args:
+        log_probs: N x S x O probability of the output classes  
+        targets: N x S target class (all positions in the sequence have in fact the same output class)
+        counts: bool flag for outputting counts of confusion or percentages
+    Returns:
+        confusion matrix for different languages
+    """
+    mask = targets == 0
+    predictions = log_probs.argmax(axis=2)
+    confusion_mat = confusion_matrix(targets[~mask], predictions[~mask])
+    
+    # remove languages which were not present in the target
+    confusion_mat = confusion_mat[confusion_mat.sum(axis=1) > 0]
+
+    if not counts:
+        confusion_mat = confusion_mat/confusion_mat.sum(axis=1)[:, None]
+        
+    return confusion_mat

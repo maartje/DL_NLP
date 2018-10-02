@@ -25,6 +25,9 @@ def main():
     accuracy_test  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
     accuracy_train  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy(), t_axis=0)
 
+    confusion_matrix_test = calculate_confusion_matrix(log_probs_test.numpy(), targets_test.numpy())
+    confusion_matrix_train = calculate_confusion_matrix(log_probs_train.numpy(), targets_train.numpy())
+
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
 
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
@@ -43,11 +46,25 @@ def main():
         config.filepaths['plot_accuracy_seq_length'])
         
     accuracies_test_tfidf = torch.load(config.filepaths['tf_idf_test_accuracies'])
+
     plot_accuracy_per_position(
         [accuracy_test, accuracies_test_tfidf],
         ['RNN', 'TFIDF'], 
         config.filepaths['plot_accuracy_model_comparison'])
 
+    plot_confusion_matrix(
+        confusion_matrix_test,
+        False,
+        'classes', # TODO: Pass id to language mapping
+        config.filepaths['plot_test_confusion_matrix']
+    )
+
+    plot_confusion_matrix(
+        confusion_matrix_train,
+        False,
+        'classes',  # TODO: Pass id to language mapping
+        config.filepaths['plot_train_confusion_matrix']
+    )
 
 if __name__ == "__main__":
     main()

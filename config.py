@@ -33,7 +33,9 @@ filepaths = {
     'plot_epoch_losses' : 'data/evaluate/plot_epoch_losses.png',
     'plot_epoch_accuracies' : 'data/evaluate/plot_epoch_accuracies.png',
     'plot_accuracy_seq_length' : 'data/evaluate/plot_seq_acc.png',
-    'plot_accuracy_model_comparison' : 'data/evaluate/plot_accuracy_model_comparison.png'
+    'plot_accuracy_model_comparison' : 'data/evaluate/plot_accuracy_model_comparison.png',
+    'plot_train_confusion_matrix':  'data/evaluate/plot_train_confusion_matrix.png',
+    'plot_test_confusion_matrix':  'data/evaluate/plot_test_confusion_matrix.png'
 }
 
 settings = {
