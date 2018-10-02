@@ -6,8 +6,7 @@ def calculate_loss(log_probs, targets, loss_criterion):
 
 def calculate_accuracy(probs, targets, t_axis=None):
     """
-    Calculates the average accuracy 
-    WARNING: this implementation does not take padding into account! 
+    Calculates the average accuracy (ignoring the paddings)
 
     With 'N' the batch_size, 'S' the max character sequence length and 'O' the nr of output classes
     Args:
@@ -21,8 +20,13 @@ def calculate_accuracy(probs, targets, t_axis=None):
     Returns:
         average accuracie(s)
     """
+    mask = targets == 0
+    masked_targets = ma.MaskedArray(targets, mask)
 
+    
     predictions = probs.argmax(axis=2) 
-    corrects = (predictions == targets).sum(axis=t_axis)
-    totals = ma.count(targets, axis=t_axis)
+    masked_predictions = ma.MaskedArray(predictions, mask)
+
+    corrects = (masked_predictions == masked_targets).sum(axis=t_axis)
+    totals = ma.count(masked_targets, axis=t_axis)
     return corrects / totals
