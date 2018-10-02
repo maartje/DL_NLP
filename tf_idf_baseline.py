@@ -29,6 +29,10 @@ def main():
     
     # TODO: we may consider doing something with all possible
     # completions for the last word
+
+    # TODO: maybe cut prefixes to make comparison more similar
+
+    # TODO: do TF-IDF and simple counts
     
     # calculate accuracies pre position
     def accuracy_at_position(texts, targets, position):
