@@ -56,8 +56,7 @@ def main():
         vocab_size, hidden_size, output_size, PAD_index, drop_out)
 
     # initialize train settings for RNN model
-    #learning_rate = config.settings['rnn']['learning_rate'] 
-
+    learning_rate = config.settings['rnn']['learning_rate'] 
     loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
     optimizer = optim.SGD(model.parameters(), lr = learning_rate)
     epochs = config.settings['rnn']['epochs'] 
