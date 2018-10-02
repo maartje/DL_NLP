@@ -33,7 +33,7 @@ def calculate_accuracy(log_probs, targets, t_axis=None):
     return corrects / totals
 
 
-def calculate_confusion_matrix(log_probs, targets, counts=False, include_padding=False):
+def calculate_confusion_matrix(log_probs, targets, counts=False):
     """
     Calculates the confusion matrix (ignoring the paddings)
 
@@ -49,15 +49,19 @@ def calculate_confusion_matrix(log_probs, targets, counts=False, include_padding
     mask = targets == 0
     predictions = log_probs.argmax(axis=2)
     
+
     targets, predictions = targets[~mask], predictions[~mask]
-    confusion_mat = confusion_matrix(targets, predictions)
+
+    targets_languages = np.unique(targets)
+    predictions_languages = np.unique(predictions)
+
+    labels = np.union1d(targets, predictions)
+
+    confusion_mat = confusion_matrix(targets, predictions, labels)
 
     # remove languages which were not present in the target
     language_mask = confusion_mat.sum(axis=1) > 0
     confusion_mat = confusion_mat[language_mask]
-
-    targets_languages = np.unique(targets)
-    predictions_languages = np.unique(predictions)
 
     if not counts:
         confusion_mat = confusion_mat/confusion_mat.sum(axis=1)[:, None]
