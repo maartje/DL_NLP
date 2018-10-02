@@ -6,6 +6,7 @@ from src.reporting.plots import *
 
 def main():
     PAD_index = config.settings['PAD_index']
+    targets_dictionaries = torch.load(config.filepaths['targets_dictionaries'])[1]
     (log_probs_train, targets_train, lengths) = torch.load(config.filepaths['predictions_train'])
     (log_probs_test, targets_test, lengths) = torch.load(config.filepaths['predictions_test'])
 
@@ -25,12 +26,15 @@ def main():
     accuracy_test  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
     accuracy_train  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy(), t_axis=0)
 
-    confusion_matrix_test = calculate_confusion_matrix(log_probs_test.numpy(), targets_test.numpy())
-    confusion_matrix_train = calculate_confusion_matrix(log_probs_train.numpy(), targets_train.numpy())
+    confusion_matrix_test, languages_idxs_test = calculate_confusion_matrix(log_probs_test.numpy(), 
+                                                                            targets_test.numpy())
+    confusion_matrix_train, languages_idxs_train = calculate_confusion_matrix(log_probs_train.numpy(), 
+                                                                            targets_train.numpy())
 
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
 
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
+    
     plot_epoch_losses(
         epoch_metrics['train_losses'], 
         epoch_metrics['val_losses'], 
@@ -54,15 +58,17 @@ def main():
 
     plot_confusion_matrix(
         confusion_matrix_test,
+        languages_idxs_test,
         False,
-        'classes', # TODO: Pass id to language mapping
+        targets_dictionaries,  # TODO: Pass id to language mapping
         config.filepaths['plot_test_confusion_matrix']
     )
 
     plot_confusion_matrix(
         confusion_matrix_train,
+        languages_idxs_train,
         False,
-        'classes',  # TODO: Pass id to language mapping
+        targets_dictionaries,  # TODO: Pass id to language mapping
         config.filepaths['plot_train_confusion_matrix']
     )
 

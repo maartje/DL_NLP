@@ -41,7 +41,7 @@ def plot_accuracy_per_position(accuracy_results, model_names, fname, title = Non
 
 
 # Sample code from http://scikit-learn.org/stable/auto_examples/model_selection/plot_confusion_matrix.html
-def plot_confusion_matrix(confusion_matrix, counts, classes, fname, title=None):
+def plot_confusion_matrix(confusion_matrix, languages_idxs, counts, id2lang, fname, title=None):
     """
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
@@ -49,9 +49,11 @@ def plot_confusion_matrix(confusion_matrix, counts, classes, fname, title=None):
     plt.imshow(confusion_matrix, interpolation='nearest', cmap=plt.cm.Blues)
     plt.colorbar()
 
-    tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation=45)
-    plt.yticks(tick_marks, classes)
+    languages = [id2lang[language_idx] for language_idx in languages_idxs]
+
+    tick_marks = np.arange(len(languages))
+    plt.xticks(tick_marks, languages, rotation=45)
+    plt.yticks(tick_marks, languages)
 
     fmt = '.2f' if not counts else 'd'
     thresh = confusion_matrix.max() / 2.

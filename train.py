@@ -47,7 +47,7 @@ def main():
     # initialize RNN model and train settings
     vocab_size = torch.load(config.filepaths['vocab']).vocab.n_words 
     hidden_size = config.settings['rnn']['hidden_size'] 
-    output_size = len(torch.load(config.filepaths['targets_dictionairies'])[0]) # nr of languages + 1 for padding (pass as a parameter read from label dict)
+    output_size = len(torch.load(config.filepaths['targets_dictionaries'])[0]) # nr of languages + 1 for padding (pass as a parameter read from label dict)
     drop_out = config.settings['rnn']['drop_out'] 
     model = LanguageRecognitionRNN(
         vocab_size, hidden_size, output_size, PAD_index, drop_out)
