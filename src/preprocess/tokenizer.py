@@ -43,7 +43,11 @@ class WordTokenizer(object):
         max_length: 4
         return 'The cat sits on'
         """
-        raise NotImplementedError
+
+        s_split = sentence.split(' ')
+        sent = ' '.join(s_split[:max_length])
+
+        return sent
 
     def get_all_fragments(self, sentence, max_length):
         """
