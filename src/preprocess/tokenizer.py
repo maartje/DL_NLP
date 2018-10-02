@@ -37,9 +37,19 @@ class CharacterTokenizer(object):
 class WordTokenizer(object):
     
     def get_prefix_fragment(self, sentence, max_length):
+        """
+        Example:
+        sentence: 'The cat sits on the mat'
+        max_length: 4
+        return 'The cat sits on'
+        """
         raise NotImplementedError
 
     def get_all_fragments(self, sentence, max_length):
+        """
+        Not implemented because we are probably not going to use it. 
+        It requires a GPU
+        """
         raise NotImplementedError
 
     def preprocess(self, sentence): 
