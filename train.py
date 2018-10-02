@@ -17,7 +17,8 @@ def main():
     fpath_vectors_train = config.filepaths['vectors_train'] 
     fpath_labels_train = config.filepaths['targets_train']
     PAD_index = config.settings['PAD_index']
-    batch_size = config.settings['rnn']['batch_size']
+    model_name = config.settings['model_name']
+    batch_size = config.settings[model_name]['batch_size']
 
     # initialize data loader
     ds = DatasetLanguageIdentification(
@@ -45,34 +46,34 @@ def main():
     dl_train = data.DataLoader(ds_train, **dl_params_train)
     dl_val = data.DataLoader(ds_val, **dl_params_val)
 
-    # initialize RNN model and train settings
+    # initialize the model and train settings
     vocab_size = torch.load(config.filepaths['vocab']).vocab.n_words 
-    hidden_size = config.settings['rnn']['hidden_size'] 
+    hidden_size = config.settings[model_name]['hidden_size']
     output_size = len(torch.load(config.filepaths['targets_dictionaries'])[0]) # nr of languages + 1 for padding (pass as a parameter read from label dict)
-    drop_out = config.settings['rnn']['drop_out'] 
-    # model = LanguageRecognitionRNN(
-    #     vocab_size, hidden_size, output_size, PAD_index, drop_out)
-    model = LanguageRecognitionCNN(
-        vocab_size, hidden_size, output_size, PAD_index, drop_out)
+    drop_out = config.settings[model_name]['drop_out']
+    
+    if model_name == 'rnn':
+        model = LanguageRecognitionRNN(vocab_size, hidden_size, output_size, PAD_index, drop_out)
+    else:
+        model = LanguageRecognitionCNN(vocab_size, hidden_size, output_size, PAD_index, drop_out)
 
-    # initialize train settings for RNN model
-    learning_rate = config.settings['rnn']['learning_rate'] 
+    # initialize train settings for the model
+    learning_rate = config.settings[model_name]['learning_rate']
     loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
     optimizer = optim.SGD(model.parameters(), lr = learning_rate)
-    epochs = config.settings['rnn']['epochs'] 
+    epochs = config.settings[model_name]['epochs']
 
 
     # collect information during training
     metricsCollector = MetricsCollector(
-        model, dl_val, config.settings['max_seq_length'], loss
+        model, dl_val, config.settings['max_seq_length'], loss, model_name
     )
     trainOutputWriter = TrainOutputWriter(metricsCollector)
 
-    modelSaver = ModelSaver(
-        model, metricsCollector, config.filepaths['model'])
+    modelSaver = ModelSaver(model, metricsCollector, config.filepaths['model'])
 
-    # fit RNN model
-    fit(model, dl_train, loss, optimizer, epochs, [
+    # fit the model
+    fit(model, dl_train, loss, optimizer, epochs, model_name, [
         metricsCollector.store_metrics,
         trainOutputWriter.print_epoch_info,
         modelSaver.save_best_model

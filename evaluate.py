@@ -11,8 +11,9 @@ def main():
     (log_probs_test, targets_test, lengths) = torch.load(config.filepaths['predictions_test'])
 
     nll_loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target values for padding
-    train_loss = calculate_loss(log_probs_train, targets_train, nll_loss)
-    test_loss = calculate_loss(log_probs_test, targets_test, nll_loss)
+    train_loss = calculate_loss(log_probs_train, targets_train, nll_loss, config.settings['model_name'])
+    test_loss = calculate_loss(
+        log_probs_test, targets_test, nll_loss, config.settings['model_name'])
 
     accuracy_test_avg  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy())
     accuracy_train_avg  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy())

@@ -2,11 +2,15 @@ import numpy.ma as ma
 import numpy as np
 from sklearn.metrics import confusion_matrix
 
-def calculate_loss(log_probs, targets, loss_criterion):
-    loss = loss_criterion(log_probs.permute(0,2,1), targets)
+def calculate_loss(log_probs, targets, loss_criterion, model_name='rnn'):
+    if model_name == 'rnn':
+        loss = loss_criterion(log_probs.permute(0, 2, 1), targets)
+    elif model_name =='cnn':
+        loss = loss_criterion(log_probs, targets)
     return loss.item()
 
-def calculate_accuracy(log_probs, targets, t_axis=None):
+
+def calculate_accuracy(log_probs, targets, t_axis=None, model_name='rnn'):
     """
     Calculates the average accuracy (ignoring the paddings)
 
@@ -25,7 +29,7 @@ def calculate_accuracy(log_probs, targets, t_axis=None):
     mask = targets == 0
     masked_targets = ma.MaskedArray(targets, mask)
 
-    predictions = log_probs.argmax(axis=2)
+    predictions = log_probs.argmax(axis=-1)
     masked_predictions = ma.MaskedArray(predictions, mask)
 
     corrects = (masked_predictions == masked_targets).sum(axis=t_axis)
@@ -47,8 +51,7 @@ def calculate_confusion_matrix(log_probs, targets, counts=False):
         list of language indices
     """
     mask = targets == 0
-    predictions = log_probs.argmax(axis=2)
-    
+    predictions = log_probs.argmax(axis=-1)
 
     targets, predictions = targets[~mask], predictions[~mask]
 
