@@ -52,8 +52,8 @@ settings = {
     'check_equal_seq_length' : False, # use True for now since padding is not supported yet in accuracy calculation
     'rnn' : {
         'batch_size' : 4,
-        'learning_rate' : 0.5,
-        'epochs' : 10,
+        'learning_rate' : 0.6,
+        'epochs' : 5,
         'hidden_size' : 256,
         'drop_out' : 0.3
     }
@@ -65,7 +65,7 @@ settings = {
 
 language_filters = {
     #'test'     : ['nld', 'eng'],
-    'test'     : ['nld', 'eng', 'fra', 'ita', 'deu'],
+    'test'     : ['nld', 'eng', 'fra', 'ita', 'deu','afr'],
     'latin'    : ['ace', 'afr', 'als', 'ang', 'arg', 'ast', 'aym', 'aze', 'bar', 'bcl', 'bjn',
                   'bre', 'cat', 'cbk', 'ceb', 'ces', 'cor', 'cos', 'csb', 'cym', 'dan', 'deu', 'diq', 'dsb',
                   'egl', 'eng', 'epo', 'est', 'eus', 'ext', 'fao', 'fin', 'fra', 'frp', 'fry', 'fur', 'gla',

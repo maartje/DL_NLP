@@ -54,7 +54,6 @@ def main(learning_rate):
 
     # initialize train settings for RNN model
     #learning_rate = config.settings['rnn']['learning_rate'] 
-
     loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
     optimizer = optim.SGD(model.parameters(), lr = learning_rate)
     epochs = config.settings['rnn']['epochs'] 
@@ -84,4 +83,4 @@ def main(learning_rate):
 
 
 if __name__ == "__main__":
-    main()
+    main(learning_rate)
