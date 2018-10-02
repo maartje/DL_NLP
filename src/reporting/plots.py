@@ -53,7 +53,7 @@ def plot_confusion_matrix(confusion_matrix, counts, classes, fname, title=None):
     plt.xticks(tick_marks, classes, rotation=45)
     plt.yticks(tick_marks, classes)
 
-    fmt = '.2f' if counts else 'd'
+    fmt = '.2f' if not counts else 'd'
     thresh = confusion_matrix.max() / 2.
     for i, j in itertools.product(range(confusion_matrix.shape[0]), 
                                   range(confusion_matrix.shape[1])):
