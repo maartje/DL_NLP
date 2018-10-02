@@ -2,6 +2,7 @@ from src.io.dataset_language_identification import DatasetLanguageIdentification
 from torch.utils import data
 import config
 from src.nn.rnn_model import LanguageRecognitionRNN
+from src.nn.cnn_model import LanguageRecognitionCNN
 from src.nn.train import fit
 import torch.nn as nn
 import torch.optim as optim
@@ -49,7 +50,9 @@ def main(learning_rate):
     hidden_size = config.settings['rnn']['hidden_size'] 
     output_size = len(torch.load(config.filepaths['targets_dictionaries'])[0]) # nr of languages + 1 for padding (pass as a parameter read from label dict)
     drop_out = config.settings['rnn']['drop_out'] 
-    model = LanguageRecognitionRNN(
+    # model = LanguageRecognitionRNN(
+    #     vocab_size, hidden_size, output_size, PAD_index, drop_out)
+    model = LanguageRecognitionCNN(
         vocab_size, hidden_size, output_size, PAD_index, drop_out)
 
     # initialize train settings for RNN model
@@ -58,6 +61,7 @@ def main(learning_rate):
     loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
     optimizer = optim.SGD(model.parameters(), lr = learning_rate)
     epochs = config.settings['rnn']['epochs'] 
+
 
     # collect information during training
     metricsCollector = MetricsCollector(

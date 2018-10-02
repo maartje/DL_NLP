@@ -60,7 +60,7 @@ def main():
         confusion_matrix_test,
         languages_idxs_test,
         False,
-        targets_dictionaries,  # TODO: Pass id to language mapping
+        targets_dictionaries,
         config.filepaths['plot_test_confusion_matrix']
     )
 
@@ -68,7 +68,7 @@ def main():
         confusion_matrix_train,
         languages_idxs_train,
         False,
-        targets_dictionaries,  # TODO: Pass id to language mapping
+        targets_dictionaries,
         config.filepaths['plot_train_confusion_matrix']
     )
 

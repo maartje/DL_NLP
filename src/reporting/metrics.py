@@ -48,15 +48,22 @@ def calculate_confusion_matrix(log_probs, targets, counts=False):
     """
     mask = targets == 0
     predictions = log_probs.argmax(axis=2)
-    confusion_mat = confusion_matrix(targets[~mask], predictions[~mask])
-
     
+
+    targets, predictions = targets[~mask], predictions[~mask]
+
+    targets_languages = np.unique(targets)
+    predictions_languages = np.unique(predictions)
+
+    labels = np.union1d(targets, predictions)
+
+    confusion_mat = confusion_matrix(targets, predictions, labels)
+
     # remove languages which were not present in the target
     language_mask = confusion_mat.sum(axis=1) > 0
-    languages_idxs = np.arange(confusion_mat.shape[0])[language_mask]
     confusion_mat = confusion_mat[language_mask]
 
     if not counts:
         confusion_mat = confusion_mat/confusion_mat.sum(axis=1)[:, None]
         
-    return confusion_mat, languages_idxs
+    return confusion_mat, (targets_languages, predictions_languages)

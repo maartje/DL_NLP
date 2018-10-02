@@ -49,13 +49,16 @@ def plot_confusion_matrix(confusion_matrix, languages_idxs, counts, id2lang, fna
     plt.imshow(confusion_matrix, interpolation='nearest', cmap=plt.cm.Blues)
     plt.colorbar()
 
-    languages = [id2lang[language_idx] for language_idx in languages_idxs]
+    languages_x = [id2lang[language_idx] for language_idx in languages_idxs[0]]
+    languages_y = [id2lang[language_idx] for language_idx in languages_idxs[1]]
 
-    tick_marks = np.arange(len(languages))
-    plt.xticks(tick_marks, languages, rotation=45)
-    plt.yticks(tick_marks, languages)
+    tick_marks_x = np.arange(len(languages_x))
+    tick_marks_y = np.arange(len(languages_y))
 
-    fmt = '.2f' if not counts else 'd'
+    plt.xticks(tick_marks_x, languages_x, rotation=45)
+    plt.yticks(tick_marks_y, languages_y)
+
+    fmt = '.5f' if not counts else 'd'
     thresh = confusion_matrix.max() / 2.
     for i, j in itertools.product(range(confusion_matrix.shape[0]), 
                                   range(confusion_matrix.shape[1])):
