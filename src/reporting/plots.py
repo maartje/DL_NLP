@@ -1,4 +1,6 @@
 import matplotlib
+import itertools
+import numpy as np
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
@@ -32,6 +34,36 @@ def plot_accuracy_per_position(accuracy_results, model_names, fname, title = Non
     plt.xlabel('sequence length')
     plt.ylabel('avg. accuracy')
     plt.legend()
+    if title:
+        plt.title(title)
+    plt.savefig(fname)
+    plt.close()
+
+
+# Sample code from http://scikit-learn.org/stable/auto_examples/model_selection/plot_confusion_matrix.html
+def plot_confusion_matrix(confusion_matrix, counts, classes, fname, title=None):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting `normalize=True`.
+    """
+    plt.imshow(confusion_matrix, interpolation='nearest', cmap=plt.cm.Blues)
+    plt.colorbar()
+
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45)
+    plt.yticks(tick_marks, classes)
+
+    fmt = '.2f' if counts else 'd'
+    thresh = confusion_matrix.max() / 2.
+    for i, j in itertools.product(range(confusion_matrix.shape[0]), 
+                                  range(confusion_matrix.shape[1])):
+        plt.text(j, i, format(confusion_matrix[i, j], fmt),
+                 horizontalalignment="center",
+                 color="white" if confusion_matrix[i, j] > thresh else "black")
+
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    plt.tight_layout()
     if title:
         plt.title(title)
     plt.savefig(fname)
