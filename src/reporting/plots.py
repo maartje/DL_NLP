@@ -58,7 +58,7 @@ def plot_confusion_matrix(confusion_matrix, languages_idxs, counts, id2lang, fna
     plt.xticks(tick_marks_x, languages_x, rotation=45)
     plt.yticks(tick_marks_y, languages_y)
 
-    fmt = '.2f' if not counts else 'd'
+    fmt = '.5f' if not counts else 'd'
     thresh = confusion_matrix.max() / 2.
     for i, j in itertools.product(range(confusion_matrix.shape[0]), 
                                   range(confusion_matrix.shape[1])):
