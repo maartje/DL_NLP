@@ -46,6 +46,6 @@ class LanguageRecognitionCNN(nn.Module):
         x = x.view(x.size(0), -1)
         
         output = self.linear(self.dropout_cnn(x))  # unpacked[0]))
-        output = self.logsoftmax(output) 
+        output = self.logsoftmax(output)
 
         return output #, hidden
