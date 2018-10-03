@@ -41,7 +41,7 @@ filepaths = {
 settings = {
     # preprocess
     'model_name': 'rnn', #or rnn
-    'model' : 'char', #or char
+    'model' : 'word', #or char
     'language_filter' : 'test',
     'min_occurrence' : 2,
     'PAD_index' : 0, # DO NOT CHANGE THIS!
@@ -53,17 +53,17 @@ settings = {
     'check_equal_seq_length' : False, # use True for now since padding is not supported yet in accuracy calculation
     'rnn' : {
         'batch_size' : 128,
-        'learning_rate' : 0.6,
+        'learning_rate' : 0.005,
         'epochs' : 20,
         'hidden_size' : 256,
         'drop_out' : 0.3
     },
     'cnn': {
-        'batch_size': 4,
-        'learning_rate': 0.5,
+        'batch_size': 128,
+        'learning_rate': 0.001,
         'epochs': 10,
-        'hidden_size': 256,
-        'drop_out': 0.3
+        'hidden_size': 128,
+        'drop_out': 0.5
     }
 
     # predict

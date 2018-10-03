@@ -1,8 +1,12 @@
 20 Languages Training Settings:
 
-Optimizer : SGD
-Learning rate : 0.6
-epoch : 10
+Optimizer : Adam
+model name:  rnn
+batch size:  128
+max length:  25
+learning_rate 0.0005
+number of classes:  20
+epoch : 20
 Classes : ['nld', 'eng', 'fra', 'ita', 'deu','afr', 'dan', 'fin', 'ltz', 'por', 'slk', 'swe', 'slv', 'gle', 'scn', 'spa', 'ron', 'lit', 'est','isl']
 
 

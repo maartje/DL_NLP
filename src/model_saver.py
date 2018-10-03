@@ -12,7 +12,7 @@ class ModelSaver():
         last_val_acc = self.metrics_collector.val_accuracies[-1]
         if last_val_acc == max_val_acc:
             torch.save(self.model, self.fpath_model)
-            print (f"Best model so far saved to '{self.fpath_model}'")
+            print (f"best model so far saved")
                 
 
 

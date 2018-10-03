@@ -20,6 +20,14 @@ def main():
     model_name = config.settings['model_name']
     batch_size = config.settings[model_name]['batch_size']
 
+    
+    print("model name: ", model_name)
+    print("batch size: ", batch_size)
+    print("max length: ", config.settings['max_seq_length'])
+    print("learning_rate" ,config.settings[model_name]['learning_rate'])
+    print("number of classes: ",len(config.language_filters['test']))
+    
+
     # initialize data loader
     ds = DatasetLanguageIdentification(
         fpath_vectors_train, 
@@ -54,13 +62,16 @@ def main():
     
     if model_name == 'rnn':
         model = LanguageRecognitionRNN(vocab_size, hidden_size, output_size, PAD_index, drop_out)
-    else:
+    if model_name == 'cnn':
         model = LanguageRecognitionCNN(vocab_size, hidden_size, output_size, PAD_index, drop_out)
 
     # initialize train settings for the model
     learning_rate = config.settings[model_name]['learning_rate']
-    loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
-    optimizer = optim.SGD(model.parameters(), lr = learning_rate)
+    if model_name == 'rnn':
+        loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
+    if model_name == 'cnn':
+        loss = nn.functional.cross_entropy
+    optimizer = optim.Adam(model.parameters(), lr = learning_rate)
     epochs = config.settings[model_name]['epochs']
 
     #gitoptimizer = optim.SGD(model.parameters(), lr = learning_rate)
