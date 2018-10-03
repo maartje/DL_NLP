@@ -50,11 +50,11 @@ class WordTokenizer(object):
         return sent
 
     def get_all_fragments(self, sentence, max_length):
-        """
-        Not implemented because we are probably not going to use it. 
-        It requires a GPU
-        """
-        raise NotImplementedError
+        s_split = sentence.split(' ')
+        positions = range(0, len(s_split), max_length)
+        return [
+            ' '.join(s_split[i:i + max_length]) for i in positions if i+max_length < len(sentence)
+        ]
 
     def preprocess(self, sentence): 
         return sentence.lower().strip()
