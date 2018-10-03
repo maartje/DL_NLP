@@ -1,3 +1,5 @@
+import datetime
+
 class TrainOutputWriter(object):
     def __init__(self, metricCollector):
         self.metricCollector = metricCollector
@@ -17,4 +19,4 @@ class TrainOutputWriter(object):
         val_loss = self.metricCollector.val_losses[-1]
         accuracy = self.metricCollector.val_accuracies[-1]
         print(epoch, f'{train_loss:0.3}', f'{val_loss:0.3}', f'{accuracy:0.3}')
-
+        print("time: ", datetime.datetime.time())

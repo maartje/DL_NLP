@@ -20,6 +20,14 @@ def main():
     model_name = config.settings['model_name']
     batch_size = config.settings[model_name]['batch_size']
 
+    
+    print("model name: ", model_name)
+    print("batch size: ", batch_size)
+    print("max length: ", config.settings['max_seq_length'])
+    print("learning_rate" ,config.settings[model_name]['learning_rate'])
+    print("number of classes: ",len(config.language_filters['test']))
+    
+
     # initialize data loader
     ds = DatasetLanguageIdentification(
         fpath_vectors_train, 
@@ -60,7 +68,7 @@ def main():
     # initialize train settings for the model
     learning_rate = config.settings[model_name]['learning_rate']
     loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
-    optimizer = optim.SGD(model.parameters(), lr = learning_rate)
+    optimizer = optim.Adam(model.parameters(), lr = learning_rate)
     epochs = config.settings[model_name]['epochs']
 
 
