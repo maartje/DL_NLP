@@ -22,7 +22,6 @@ def fit(model, train_data, loss_criterion, optimizer,
             probs = model(seq_vectors, lengths)
             if model_name == 'rnn':
                 loss = loss_criterion(probs.permute(0, 2, 1), targets)
-                probs = torch.clamp(probs, min=-1e-28, max=0.0)
             elif model_name == 'cnn':
                 loss = loss_criterion(probs, targets[:, -1], ignore_index=0)
 

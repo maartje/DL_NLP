@@ -27,7 +27,6 @@ def main():
     print("learning_rate" ,config.settings[model_name]['learning_rate'])
     print("number of classes: ",len(config.language_filters['test']))
     
-
     # initialize data loader
     ds = DatasetLanguageIdentification(
         fpath_vectors_train, 

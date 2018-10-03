@@ -9,7 +9,7 @@ class CharacterTokenizer(object):
     def get_all_fragments(self, sentence, max_length):
         positions = range(0, len(sentence), max_length)
         return [
-            sentence[i:i + max_length] for i in positions if i+max_length < len(sentence)
+            sentence[i:i + max_length] for i in positions 
         ]
 
     def preprocess(self, sentence): 
