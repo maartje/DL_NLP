@@ -4,11 +4,12 @@ from src.reporting.metrics import *
 
 class MetricsCollector(object):
 
-    def __init__(self, model, val_data, max_length, loss_criterion):
+    def __init__(self, model, val_data, max_length, loss_criterion, model_name):
         self.model = model
         self.val_data = val_data
         self.loss_criterion = loss_criterion
         self.max_length = max_length
+        self.model_name = model_name
 
         self.train_losses = []
         self.val_losses = [] 
@@ -34,8 +35,9 @@ class MetricsCollector(object):
         self.train_losses.append(train_loss)
 
     def calculate_metrics(self):
-        (log_probs, targets, _) = predict(self.model, self.val_data, self.max_length)
-        val_loss = calculate_loss(log_probs, targets, self.loss_criterion)
+        (log_probs, targets, _) = predict(self.model, self.val_data, 
+                                        self.max_length, self.model_name)
+        val_loss = calculate_loss(log_probs, targets, self.loss_criterion, self.model_name)
         accuracy =  calculate_accuracy(log_probs.numpy(), targets.numpy())
         confusion_matrix = calculate_confusion_matrix(log_probs.numpy(), targets.numpy())[0]
         return val_loss, accuracy, confusion_matrix
