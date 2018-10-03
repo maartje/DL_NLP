@@ -17,9 +17,9 @@ class TestTokenizer(unittest.TestCase):
         self.assertEqual(sentence_expected, sentence_preprocessed)
 
     def test_sentence2tokens(self):
-        sentence = 'hello!'
+        sentence = 'hello world!'
         tokens = self.char_tokenizer.sentence2tokens(sentence)
-        tokens_expected = ['h', 'e', 'l', 'l', 'o', '!']
+        tokens_expected = ['h', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd', '!']
         self.assertEqual(tokens_expected, tokens)
 
     def test_tokens2sentence(self):

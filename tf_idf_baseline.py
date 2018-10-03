@@ -6,8 +6,24 @@ from sklearn.feature_extraction.text import TfidfTransformer
 import config
 from preprocess import load_data
 import torch
+from src.preprocess.tokenizer import CharacterTokenizer, WordTokenizer
+
+def cut_text_fragments(texts, max_length, tokenizer):
+    if not config.settings['use_all_fragments']:
+        texts = [tokenizer.get_prefix_fragment(s, max_length) for s in texts]
+    return texts
 
 def main():
+    torch.save(
+        {
+            'word' : evaluate_naive_bayes(WordTokenizer(), 'word'),
+            'char_word_features' : evaluate_naive_bayes(CharacterTokenizer(), 'word'),
+            'char_char_features' : evaluate_naive_bayes(CharacterTokenizer(), 'char')
+        },
+        config.filepaths['naive_bayes_accuracies']
+    )
+
+def evaluate_naive_bayes(tokenizer, features):
     # load test and train data
     lang_filter = config.language_filters[config.settings['language_filter']]
     texts_train, targets_train = load_data(
@@ -18,29 +34,23 @@ def main():
         config.filepaths['texts_test'], 
         config.filepaths['labels_test'], 
         lang_filter)
-    
+
+    texts_train = cut_text_fragments(
+        texts_train, 
+        config.settings['max_seq_length'], 
+        tokenizer)
+
     # fit a naive bayes classifier with tf-idf features
     pipeline = Pipeline([
-        ('count_vectorizer',   CountVectorizer()),
-        ('tfidf_transformer',  TfidfTransformer()), # optional
+        ('count_vectorizer',   CountVectorizer(analyzer = features)), # analyzer = 'word' or 'char'
+        #('tfidf_transformer',  TfidfTransformer()), # counts seems more appropriate
         ('classifier',         MultinomialNB())
     ])
     pipeline.fit(texts_train, targets_train)
     
-    # TODO: we may consider doing something with all possible
-    # completions for the last word
-
-    # TODO: maybe cut prefixes to make comparison more similar
-
-    # TODO: do TF-IDF and simple counts
-    
     # calculate accuracies pre position
     def accuracy_at_position(texts, targets, position):
-        if config.settings['model'] == 'word':
-            texts_cutoff =  [' '.join(t.split(" ")[0:position]) for t in texts_test]
-        else:
-            texts_cutoff = [t[0:position]for t in texts]
-
+        texts_cutoff = [tokenizer.get_prefix_fragment(s, position) for s in texts]
         predicted = pipeline.predict(texts_cutoff)
         results = (np.array(targets) == predicted)
         return results.sum()/len(results) 
@@ -48,7 +58,7 @@ def main():
     accuracies_test = [
         accuracy_at_position(texts_test, targets_test, n) for n in range(n)
     ]    
-    torch.save(accuracies_test, config.filepaths['tf_idf_test_accuracies'])
+    return accuracies_test
     
 
 if __name__ == "__main__":

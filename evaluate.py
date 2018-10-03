@@ -49,12 +49,23 @@ def main():
         ['RNN test', 'RNN train'], 
         config.filepaths['plot_accuracy_seq_length'])
         
-    accuracies_test_tfidf = torch.load(config.filepaths['tf_idf_test_accuracies'])
+    naive_bayes_accuracies = torch.load(config.filepaths['naive_bayes_accuracies'])
 
-    plot_accuracy_per_position(
-        [accuracy_test, accuracies_test_tfidf],
-        ['RNN', 'TFIDF'], 
-        config.filepaths['plot_accuracy_model_comparison'])
+    if config.settings['model'] == 'word':
+        plot_accuracy_per_position(
+            [accuracy_test, naive_bayes_accuracies['word']],
+            ['RNN', 'NB'], 
+            config.filepaths['plot_accuracy_model_comparison'])
+    else :
+        plot_accuracy_per_position(
+            [ accuracy_test, 
+              naive_bayes_accuracies['char_word_features'],
+              naive_bayes_accuracies['char_char_features']
+            ],
+            ['RNN', 'NB-words', 'NB-chars'], 
+            config.filepaths['plot_accuracy_model_comparison']
+        )
+
 
     plot_confusion_matrix(
         confusion_matrix_test,
