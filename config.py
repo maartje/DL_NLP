@@ -41,6 +41,7 @@ filepaths = {
 settings = {
     # preprocess
     'model_name': 'cnn', #or rnn
+    'model_name': 'rnn', #or rnn
     'model' : 'word', #or char
     'language_filter' : 'test',
     'min_occurrence' : 2,
@@ -49,12 +50,12 @@ settings = {
     # train
     'val_train_ratio' : 0.1,
     'use_all_fragments' : True, # warning: if this setting is True and characters are used: each fragement results in many sub fragments (use GPU) 
-    'max_seq_length' : 25, 
+    'max_seq_length' : 50, 
     'check_equal_seq_length' : False, # use True for now since padding is not supported yet in accuracy calculation
     'rnn' : {
         'batch_size' : 128,
         'learning_rate' : 0.005,
-        'epochs' : 2,
+        'epochs' : 20,
         'hidden_size' : 256,
         'drop_out' : 0.3
     },

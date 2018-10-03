@@ -27,7 +27,6 @@ def main():
     print("learning_rate" ,config.settings[model_name]['learning_rate'])
     print("number of classes: ",len(config.language_filters['test']))
     
-
     # initialize data loader
     ds = DatasetLanguageIdentification(
         fpath_vectors_train, 
@@ -73,6 +72,9 @@ def main():
         loss = nn.functional.cross_entropy
     optimizer = optim.Adam(model.parameters(), lr = learning_rate)
     epochs = config.settings[model_name]['epochs']
+
+    #gitoptimizer = optim.SGD(model.parameters(), lr = learning_rate)
+    optimizer = optim.Adam(model.parameters(), lr = 0.001)
 
 
     # collect information during training
