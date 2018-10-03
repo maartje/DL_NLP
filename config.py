@@ -40,7 +40,7 @@ filepaths = {
 
 settings = {
     # preprocess
-    'model_name': 'rnn', #or rnn
+    'model_name': 'rnn', #or cnn
     'model' : 'word', #or char
     'language_filter' : 'test',
     'min_occurrence' : 2,
@@ -59,11 +59,11 @@ settings = {
         'drop_out' : 0.3
     },
     'cnn': {
-        'batch_size': 4,
-        'learning_rate': 0.5,
+        'batch_size': 128,
+        'learning_rate': 0.001,
         'epochs': 10,
-        'hidden_size': 256,
-        'drop_out': 0.3
+        'hidden_size': 128,
+        'drop_out': 0.5
     }
 
     # predict

@@ -19,12 +19,12 @@ def fit(model, train_data, loss_criterion, optimizer,
         for batch_index, batch in enumerate(train_data):
             optimizer.zero_grad()
             (seq_vectors, targets, lengths) = batch
-            log_probs = model(seq_vectors, lengths)
-            log_probs = torch.clamp(log_probs, min=-1e-28, max=0.0)
+            probs = model(seq_vectors, lengths)
             if model_name == 'rnn':
-                loss = loss_criterion(log_probs.permute(0, 2, 1), targets)
+                loss = loss_criterion(probs.permute(0, 2, 1), targets)
+                probs = torch.clamp(probs, min=-1e-28, max=0.0)
             elif model_name == 'cnn':
-                loss = loss_criterion(log_probs, targets[:, -1], ignore_index=0)
+                loss = loss_criterion(probs, targets[:, -1], ignore_index=0)
 
             loss.backward()
             optimizer.step()
