@@ -63,6 +63,9 @@ def main():
     optimizer = optim.SGD(model.parameters(), lr = learning_rate)
     epochs = config.settings[model_name]['epochs']
 
+    #gitoptimizer = optim.SGD(model.parameters(), lr = learning_rate)
+    optimizer = optim.Adam(model.parameters(), lr = 0.001)
+
 
     # collect information during training
     metricsCollector = MetricsCollector(
