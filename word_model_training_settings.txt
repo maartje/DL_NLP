@@ -1,0 +1,8 @@
+20 Languages Training Settings:
+
+Optimizer : SGD
+Learning rate : 0.6
+epoch : 10
+Classes : ['nld', 'eng', 'fra', 'ita', 'deu','afr', 'dan', 'fin', 'ltz', 'por', 'slk', 'swe', 'slv', 'gle', 'scn', 'spa', 'ron', 'lit', 'est','isl']
+
+
