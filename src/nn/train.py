@@ -24,7 +24,7 @@ def fit(model, train_data, loss_criterion, optimizer,
             if model_name == 'rnn':
                 loss = loss_criterion(log_probs.permute(0, 2, 1), targets)
             elif model_name == 'cnn':
-                loss = loss_criterion(log_probs, targets[:, -1])
+                loss = loss_criterion(log_probs, targets[:, -1], ignore_index=0)
 
             loss.backward()
             optimizer.step()

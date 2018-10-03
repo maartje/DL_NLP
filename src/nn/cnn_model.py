@@ -30,7 +30,7 @@ class LanguageRecognitionCNN(nn.Module):
         )
 
         self.linear = nn.Linear(len(self.kernel_sizes) * n_kernels, self.output_size)
-        self.logsoftmax = nn.LogSoftmax(dim=1) # TODO: or cross entropy loss?
+        self.softmax = nn.Softmax(dim=1) # TODO: or cross entropy loss?
         
         # self.dropout_embedding = nn.Dropout(p=drop_out)
         self.dropout_cnn = nn.Dropout(p=drop_out)
@@ -46,6 +46,6 @@ class LanguageRecognitionCNN(nn.Module):
         x = x.view(x.size(0), -1)
         
         output = self.linear(self.dropout_cnn(x))  # unpacked[0]))
-        output = self.logsoftmax(output)
+        output = self.softmax(output)
 
         return output #, hidden
