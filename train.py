@@ -67,10 +67,12 @@ def main():
 
     # initialize train settings for the model
     learning_rate = config.settings[model_name]['learning_rate']
-    if model_name == 'rnn':
-        loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
-    if model_name == 'cnn':
-        loss = nn.functional.cross_entropy
+
+    # if model_name == 'rnn':
+    loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
+    # elif model_name == 'cnn':
+        # loss = nn.functional.cross_entropy
+
     optimizer = optim.Adam(model.parameters(), lr = learning_rate)
     epochs = config.settings[model_name]['epochs']
 
