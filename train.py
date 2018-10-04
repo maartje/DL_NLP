@@ -21,6 +21,7 @@ def main():
     batch_size = config.settings[model_name]['batch_size']
 
     
+    print("model: ", config.settings['model'])
     print("model name: ", model_name)
     print("batch size: ", batch_size)
     print("max length: ", config.settings['max_seq_length'])
@@ -74,7 +75,7 @@ def main():
     epochs = config.settings[model_name]['epochs']
 
     #gitoptimizer = optim.SGD(model.parameters(), lr = learning_rate)
-    optimizer = optim.Adam(model.parameters(), lr = 0.001)
+    #optimizer = optim.Adam(model.parameters(), lr = 0.001)
 
 
     # collect information during training
