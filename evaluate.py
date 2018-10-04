@@ -27,6 +27,10 @@ def main():
     accuracy_test  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
     accuracy_train  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy(), t_axis=0)
 
+    fpath = f"test_accuracies_{config.settings['model_name']}_{config.settings['model']}.txt"
+    with open(fpath, 'w') as f_out:
+        print(accuracy_test, file=f_out)
+
     confusion_matrix_test, languages_idxs_test = calculate_confusion_matrix(log_probs_test.numpy(), 
                                                                             targets_test.numpy())
     confusion_matrix_train, languages_idxs_train = calculate_confusion_matrix(log_probs_train.numpy(), 
