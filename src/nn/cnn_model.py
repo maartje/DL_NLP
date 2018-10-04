@@ -18,7 +18,8 @@ class LanguageRecognitionCNN(nn.Module):
         self.output_size = output_size
         self.kernel_sizes = kernel_sizes
         self.embedding_size = embedding_size
-        
+        print('kernel sizes:', kernel_sizes)
+
         self.embedding = nn.Embedding(self.vocab_size, self.embedding_size)
         self.convs = nn.ModuleList(
             [nn.Conv2d(
