@@ -40,10 +40,10 @@ filepaths = {
 
 settings = {
     # preprocess
-    'model_name': 'cnn', #or rnn
+    'model_name': 'rnn', #or rnn
     'model' : 'word', #or char
     'language_filter' : 'test',
-    'min_occurrence' : 2,
+    'min_occurrence' : 10,
     'PAD_index' : 0, # DO NOT CHANGE THIS!
     # train
     'val_train_ratio' : 0.1,
@@ -53,7 +53,7 @@ settings = {
     'rnn' : {
         'batch_size' : 128,
         'learning_rate' : 0.005,
-        'epochs' : 20,
+        'epochs' : 30,
         'hidden_size' : 256,
         'drop_out' : 0.3
     },

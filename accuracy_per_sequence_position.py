@@ -26,7 +26,7 @@ def main():
     print('Assumptions: vocabulary, target_vectors, trained model')
 
     results = []
-    for n in range(6, config.settings['max_seq_length']):
+    for n in range(1, 51):
         preprocess.preprocess_texts_max_length(n, CharacterTokenizer())
 
         dl_test = build_dataloader(
