@@ -87,6 +87,17 @@ def max_length_check(x_test, y_test, max_length):
 
     return x_new, y_new
 
+# quick and dirty
+def preprocess_texts_max_length(max_length, tokenizer):
+    lang_filter_setting = config.settings['language_filter']
+    lang_filter = config.language_filters[lang_filter_setting]
+    x_test, _ = load_data(
+        config.filepaths['texts_test'], config.filepaths['labels_test'], lang_filter)
+    x_test = [tokenizer.get_prefix_fragment(s, max_length) for s in x_test] # we test on prefixes only
+
+    fpath_vocab = config.filepaths['vocab']
+    fpath_vectors_test = config.filepaths['vectors_test']
+    build_vectors(x_test, fpath_vocab, fpath_vectors_test)
 
 def main():
     lang_filter_setting = config.settings['language_filter']
