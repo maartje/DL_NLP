@@ -41,12 +41,10 @@ filepaths = {
 settings = {
     # preprocess
     'model_name': 'cnn', #or rnn
-    'model_name': 'rnn', #or rnn
     'model' : 'word', #or char
     'language_filter' : 'test',
     'min_occurrence' : 2,
     'PAD_index' : 0, # DO NOT CHANGE THIS!
-
     # train
     'val_train_ratio' : 0.1,
     'use_all_fragments' : True, # warning: if this setting is True and characters are used: each fragement results in many sub fragments (use GPU) 
