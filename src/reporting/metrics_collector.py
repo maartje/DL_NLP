@@ -38,6 +38,6 @@ class MetricsCollector(object):
         (log_probs, targets, _) = predict(self.model, self.val_data, 
                                         self.max_length, self.model_name)
         val_loss = calculate_loss(log_probs, targets, self.loss_criterion, self.model_name)
-        accuracy =  calculate_accuracy(log_probs.numpy(), targets.numpy())
-        confusion_matrix = calculate_confusion_matrix(log_probs.numpy(), targets.numpy())[0]
+        accuracy =  calculate_accuracy(log_probs.cpu().numpy(), targets.cpu().numpy())
+        confusion_matrix = calculate_confusion_matrix(log_probs.cpu().numpy(), targets.cpu().numpy())[0]
         return val_loss, accuracy, confusion_matrix
