@@ -41,7 +41,7 @@ filepaths = {
 settings = {
     # preprocess
     'model_name': 'cnn', #or rnn
-    'model' : 'word', #or char
+    'model' : 'char', #or word
     'language_filter' : 'test',
     'min_occurrence' : 2,
     'PAD_index' : 0, # DO NOT CHANGE THIS!

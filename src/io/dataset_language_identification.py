@@ -5,13 +5,15 @@ import tables
 from torch.utils import data
 import math
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
 class DatasetLanguageIdentification(data.Dataset):
 
     def __init__(self, fpath_vectors, fpath_labels, max_seq_length):
         super(DatasetLanguageIdentification, self).__init__()
         
-        self.sequence_vectors = torch.load(fpath_vectors) 
-        self.labels = torch.load(fpath_labels) # TODO: read pickle files        
+        self.sequence_vectors = torch.load(fpath_vectors, device) 
+        self.labels = torch.load(fpath_labels, device) # TODO: read pickle files        
         self.max_seq_length = max_seq_length
 
     def __len__(self):

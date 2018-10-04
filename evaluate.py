@@ -4,19 +4,22 @@ import config
 from src.reporting.metrics import *
 from src.reporting.plots import *
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
 def main():
     PAD_index = config.settings['PAD_index']
     targets_dictionaries = torch.load(config.filepaths['targets_dictionaries'])[1]
-    (log_probs_train, targets_train, lengths) = torch.load(config.filepaths['predictions_train'])
-    (log_probs_test, targets_test, lengths) = torch.load(config.filepaths['predictions_test'])
+
+    (log_probs_train, targets_train, lengths) = torch.load(config.filepaths['predictions_train'], device)
+    (log_probs_test, targets_test, lengths) = torch.load(config.filepaths['predictions_test'], device)
 
     nll_loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target values for padding
     train_loss = calculate_loss(log_probs_train, targets_train, nll_loss, config.settings['model_name'])
     test_loss = calculate_loss(
         log_probs_test, targets_test, nll_loss, config.settings['model_name'])
 
-    accuracy_test_avg  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy())
-    accuracy_train_avg  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy())
+    accuracy_test_avg  = calculate_accuracy(log_probs_test.cpu().numpy(), targets_test.cpu().numpy())
+    accuracy_train_avg  = calculate_accuracy(log_probs_train.cpu().numpy(), targets_train.cpu().numpy())
 
     print('avg. train_loss', train_loss)
     print('avg. train_accuracy', accuracy_train_avg)
@@ -24,18 +27,19 @@ def main():
     print('avg. test_loss', test_loss)
     print('avg. test_accuracy', accuracy_test_avg)
 
-    accuracy_test  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
-    accuracy_train  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy(), t_axis=0)
+    accuracy_test  = calculate_accuracy(log_probs_test.cpu().numpy(), targets_test.cpu().numpy(), t_axis=0)
+    accuracy_train  = calculate_accuracy(log_probs_train.cpu().numpy(), targets_train.cpu().numpy(), t_axis=0)
+
     print(accuracy_test)
 
     fpath = f"test_accuracies_{config.settings['model_name']}_{config.settings['model']}.txt"
     with open(fpath, 'w') as f_out:
         print(accuracy_test, file=f_out)
 
-    confusion_matrix_test, languages_idxs_test = calculate_confusion_matrix(log_probs_test.numpy(), 
-                                                                            targets_test.numpy())
-    confusion_matrix_train, languages_idxs_train = calculate_confusion_matrix(log_probs_train.numpy(), 
-                                                                            targets_train.numpy())
+    confusion_matrix_test, languages_idxs_test = calculate_confusion_matrix(log_probs_test.cpu().numpy(), 
+                                                                            targets_test.cpu().numpy())
+    confusion_matrix_train, languages_idxs_train = calculate_confusion_matrix(log_probs_train.cpu().numpy(), 
+                                                                            targets_train.cpu().numpy())
 
     epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
 

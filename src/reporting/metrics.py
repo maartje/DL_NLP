@@ -4,9 +4,9 @@ from sklearn.metrics import confusion_matrix
 
 def calculate_loss(log_probs, targets, loss_criterion, model_name='rnn'):
     if model_name == 'rnn':
-        loss = loss_criterion(log_probs.permute(0, 2, 1), targets)
+        loss = loss_criterion(log_probs.permute(0, 2, 1).cpu(), targets)
     elif model_name =='cnn':
-        loss = loss_criterion(log_probs, targets)
+        loss = loss_criterion(log_probs.cpu(), targets)
     return loss.item()
 
 
