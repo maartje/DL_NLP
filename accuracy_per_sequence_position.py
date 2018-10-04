@@ -7,6 +7,8 @@ from src.io.dataset_language_identification import DatasetLanguageIdentification
 from torch.utils import data
 from src.preprocess.tokenizer import CharacterTokenizer, WordTokenizer
 
+import numpy.ma as ma
+
 def build_dataloader(fpath_vectors, fpath_labels, n):
     PAD_index = config.settings['PAD_index']
     batch_size = config.settings['rnn']['batch_size']
@@ -37,15 +39,28 @@ def main():
         model = torch.load(config.filepaths['model'])
 
         (log_probs_test, targets_test, _) = predict(model, dl_test, n, config.settings['model_name'])
-        accuracy_test  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
-        results.append(accuracy_test[-1])
-        print(f"position {n}: {accuracy_test[-1]}")
+        accuracy_test  = accuracy_of_last(log_probs_test.numpy(), targets_test.numpy()) #calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
+        print(accuracy_test)
+        results.append(accuracy_test)
+        print(f"position {n}: {accuracy_test}")
 
     print('accuracies per sequence length', results)
     fpath = f"test_accuracies_by_looping_over_positions.txt"
     with open(fpath, 'w') as f_out:
         print(results, file=f_out)
 
+
+def accuracy_of_last(log_probs, targets):
+    mask = targets == 0
+    masked_targets = ma.MaskedArray(targets, mask)
+
+    predictions = log_probs.argmax(axis=-1)
+    masked_predictions = ma.MaskedArray(predictions, mask)
+    counts = masked_predictions.count(axis=1)
+    last_predictions = masked_predictions[[range(len(counts)), (counts - 1)]].data
+    last_targets = targets[:,0]
+    results = last_predictions == last_targets
+    return sum(results)/len(results)
 
 if __name__ == "__main__":
     main()
