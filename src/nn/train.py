@@ -22,9 +22,9 @@ def fit(model, train_data, loss_criterion, optimizer,
             (seq_vectors, targets, lengths) = batch
             seq_vectors, targets, lengths = seq_vectors.to(device), targets.to(device), lengths.to(device)
             probs = model(seq_vectors, lengths)
-            if model_name == 'rnn':
+            if 'rnn' in model_name:
                 loss = loss_criterion(probs.permute(0, 2, 1), targets)
-            elif model_name == 'cnn':
+            elif 'cnn' in model_name:
                 loss = loss_criterion(probs, targets[:, -1])
 
             loss.backward()
@@ -58,7 +58,7 @@ def predict(model, test_data, max_length, model_name='rnn', device=torch.device(
             seq_vectors, targets, lengths = seq_vectors.to(device), targets.to(device), lengths.to(device)
             log_probs = model(seq_vectors, lengths)
 
-            if model_name == 'rnn':
+            if 'rnn' in model_name:
                 # pad with 0 in seq dimension (= 1)
                 log_probs_padded = torch.zeros(log_probs.shape[0], max_length, log_probs.shape[2])
                 log_probs_padded[:, :log_probs.shape[1], :] = log_probs.cpu()
@@ -68,7 +68,7 @@ def predict(model, test_data, max_length, model_name='rnn', device=torch.device(
                 log_probs_batches.append(log_probs_padded)
                 targets_batches.append(targets_padded) 
                 lengths_batches.append(lengths) 
-            elif model_name == 'cnn':
+            elif 'cnn' in model_name:
                 log_probs_batches.append(log_probs)
                 targets_batches.append(targets[:, -1].cpu())
                 lengths_batches.append(torch.ones_like(lengths))

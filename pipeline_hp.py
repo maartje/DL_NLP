@@ -11,10 +11,11 @@ from src.reporting.plots import *
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def evaluate_hp():
+    model_name = config.settings['model_name']
     PAD_index = config.settings['PAD_index']
     targets_dictionaries = torch.load(config.filepaths['targets_dictionaries'], device)[1]
-    (log_probs_train, targets_train, lengths) = torch.load(config.filepaths['predictions_train'], device)
-    (log_probs_test, targets_test, lengths) = torch.load(config.filepaths['predictions_test'], device)
+    (log_probs_train, targets_train, lengths) = torch.load(config.filepaths[model_name]['predictions_train'], device)
+    (log_probs_test, targets_test, lengths) = torch.load(config.filepaths[model_name]['predictions_test'], device)
 
     nll_loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target values for padding
     train_loss = calculate_loss(log_probs_train, targets_train, nll_loss)
@@ -25,6 +26,7 @@ def evaluate_hp():
 
 def main():
     learning_rates = [0.01, 0.05, 0.1, 0.2, 0.5, 0.6, 0.7]
+    model_name = config.settings['model_name']
 
     preprocess.main()
     tf_idf_baseline.main()
@@ -36,7 +38,7 @@ def main():
     	train_hp.main(lr)
     	predict.main()
     	evaluate_hp()
-    	epoch_metrics = torch.load(config.filepaths['epoch_metrics'], device)
+    	epoch_metrics = torch.load(config.settings[model_name]['epoch_metrics'], device)
     	val_acc_hp[lr] = epoch_metrics['val_accuracies'][-1]
     	val_loss_hp[lr] = epoch_metrics['val_losses'][-1]
 

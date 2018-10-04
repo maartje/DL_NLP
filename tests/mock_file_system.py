@@ -29,7 +29,7 @@ mocked_file_storage = {
     ]
 }
 
-def mock_torch_load(fpath):
+def mock_torch_load(fpath, device='cpu'):
     return mocked_file_storage[fpath]
 
 def mock_torch_save(data, fpath):

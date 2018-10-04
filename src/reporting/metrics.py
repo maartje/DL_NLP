@@ -3,10 +3,10 @@ import numpy as np
 from sklearn.metrics import confusion_matrix
 
 def calculate_loss(log_probs, targets, loss_criterion, model_name='rnn'):
-    if model_name == 'rnn':
-        loss = loss_criterion(log_probs.permute(0, 2, 1).cpu(), targets)
-    elif model_name =='cnn':
-        loss = loss_criterion(log_probs.cpu(), targets)
+    if 'rnn' in model_name:
+        loss = loss_criterion(log_probs.permute(0, 2, 1).cpu(), targets.cpu())
+    elif 'cnn' in model_name:
+        loss = loss_criterion(log_probs.cpu(), targets.cpu())
     return loss.item()
 
 

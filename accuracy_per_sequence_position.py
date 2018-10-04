@@ -8,8 +8,9 @@ from torch.utils import data
 from src.preprocess.tokenizer import CharacterTokenizer, WordTokenizer
 
 def build_dataloader(fpath_vectors, fpath_labels, n):
+    model_name = config.settings['model_name']
     PAD_index = config.settings['PAD_index']
-    batch_size = config.settings['rnn']['batch_size']
+    batch_size = config.settings[model_name]['batch_size']
     ds = DatasetLanguageIdentification(
         fpath_vectors, 
         fpath_labels,
@@ -25,24 +26,27 @@ def build_dataloader(fpath_vectors, fpath_labels, n):
 def main():
     print('Assumptions: vocabulary, target_vectors, trained model')
 
+    model_name = config.settings['model_name']
+
     results = []
     for n in range(1, 51):
         preprocess.preprocess_texts_max_length(n, CharacterTokenizer())
 
         dl_test = build_dataloader(
-            config.filepaths['vectors_test'], 
-            config.filepaths['targets_test'],
+            config.settings[model_name]['vectors_test'], 
+            config.settings[model_name]['targets_test'],
             n
         )
         model = torch.load(config.filepaths['model'])
 
-        (log_probs_test, targets_test, _) = predict(model, dl_test, n, config.settings['model_name'])
+        (log_probs_test, targets_test, _) = predict(model, dl_test, n, model_name)
         accuracy_test  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
         results.append(accuracy_test[-1])
         print(f"position {n}: {accuracy_test[-1]}")
 
     print('accuracies per sequence length', results)
     fpath = f"test_accuracies_by_looping_over_positions.txt"
+    
     with open(fpath, 'w') as f_out:
         print(results, file=f_out)
 

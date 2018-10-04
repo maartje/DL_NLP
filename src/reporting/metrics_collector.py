@@ -1,10 +1,12 @@
 import numpy as np
 from src.nn.train import predict
 from src.reporting.metrics import *
+import torch
 
 class MetricsCollector(object):
 
     def __init__(self, model, val_data, max_length, loss_criterion, model_name):
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         self.model = model
         self.val_data = val_data
         self.loss_criterion = loss_criterion
@@ -36,7 +38,7 @@ class MetricsCollector(object):
 
     def calculate_metrics(self):
         (log_probs, targets, _) = predict(self.model, self.val_data, 
-                                        self.max_length, self.model_name)
+                                        self.max_length, self.model_name, self.device)
         val_loss = calculate_loss(log_probs, targets, self.loss_criterion, self.model_name)
         accuracy =  calculate_accuracy(log_probs.cpu().numpy(), targets.cpu().numpy())
         confusion_matrix = calculate_confusion_matrix(log_probs.cpu().numpy(), targets.cpu().numpy())[0]
