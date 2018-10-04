@@ -41,16 +41,14 @@ filepaths = {
 settings = {
     # preprocess
     'model_name': 'cnn', #or rnn
-    'model_name': 'rnn', #or rnn
     'model' : 'word', #or char
     'language_filter' : 'test',
     'min_occurrence' : 2,
     'PAD_index' : 0, # DO NOT CHANGE THIS!
-
     # train
     'val_train_ratio' : 0.1,
     'use_all_fragments' : True, # warning: if this setting is True and characters are used: each fragement results in many sub fragments (use GPU) 
-    'max_seq_length' : 50, 
+    'max_seq_length' : 25, 
     'check_equal_seq_length' : False, # use True for now since padding is not supported yet in accuracy calculation
     'rnn' : {
         'batch_size' : 128,
@@ -62,7 +60,7 @@ settings = {
     'cnn': {
         'batch_size': 512,
         'learning_rate': 0.001,
-        'epochs': 30,
+        'epochs': 20,
         'hidden_size': 128,
         'drop_out': 0.5
     }
@@ -74,6 +72,7 @@ settings = {
 
 language_filters = {
     #'test'     : ['nld', 'eng'],
+    #'test'     : ['nld', 'eng', 'ita', 'deu','afr', 'por'],
     'test'     : ['nld', 'eng', 'fra', 'ita', 'deu','afr', 'dan', 'fin', 'ltz', 'por', 'slk', 'swe', 'slv', 'gle', 'scn', 'spa', 'ron', 'lit', 'est','isl'],
     'latin'    : ['ace', 'afr', 'als', 'ang', 'arg', 'ast', 'aym', 'aze', 'bar', 'bcl', 'bjn',
                   'bre', 'cat', 'cbk', 'ceb', 'ces', 'cor', 'cos', 'csb', 'cym', 'dan', 'deu', 'diq', 'dsb',

@@ -22,9 +22,6 @@ def evaluate_hp():
     accuracy_test_avg  = calculate_accuracy(log_probs_test.numpy(), targets_test.numpy())
     accuracy_train_avg  = calculate_accuracy(log_probs_train.numpy(), targets_train.numpy())
 
-
-
-
 def main():
     learning_rates = [0.01, 0.05, 0.1, 0.2, 0.5, 0.6, 0.7]
 
@@ -41,8 +38,6 @@ def main():
     	epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
     	val_acc_hp[lr] = epoch_metrics['val_accuracies'][-1]
     	val_loss_hp[lr] = epoch_metrics['val_losses'][-1]
-
-        
 
     plt.plot(val_acc_hp.keys(), val_acc_hp.values(), 'ro-', color='blue', label='validation accuracy')
     plt.plot(val_loss_hp.keys(), val_loss_hp.values(), 'ro-', color='red', label='validation loss')
