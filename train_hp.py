@@ -19,13 +19,13 @@ def main(learning_rate):
     fpath_labels_train = config.filepaths['targets_train']
     model_name = config.settings['model_name']
     PAD_index = config.settings['PAD_index']
-    batch_size = config.settings['rnn']['batch_size']
+    batch_size = config.settings[model_name]['batch_size']
 
     # initialize data loader
     ds = DatasetLanguageIdentification(
         fpath_vectors_train, 
         fpath_labels_train,
-        config.settings['max_seq_length']
+        config.settings[model_name]['max_seq_length']
     )
     dl_params_train = {
         'batch_size' : batch_size,
@@ -51,9 +51,9 @@ def main(learning_rate):
 
     # initialize RNN model and train settings
     vocab_size = torch.load(config.filepaths['vocab'], device).vocab.n_words 
-    hidden_size = config.settings['rnn']['hidden_size'] 
+    hidden_size = config.settings[model_name]['hidden_size']
     output_size = len(torch.load(config.filepaths['targets_dictionaries'], device)[0]) # nr of languages + 1 for padding (pass as a parameter read from label dict)
-    drop_out = config.settings['rnn']['drop_out'] 
+    drop_out = config.settings[model_name]['drop_out']
     model = LanguageRecognitionRNN(
         vocab_size, hidden_size, output_size, PAD_index, drop_out)
 
@@ -61,11 +61,12 @@ def main(learning_rate):
     #learning_rate = config.settings['rnn']['learning_rate'] 
     loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
     optimizer = optim.SGD(model.parameters(), lr = learning_rate)
-    epochs = config.settings['rnn']['epochs'] 
+    epochs = config.settings[model_name]['epochs']
 
     # collect information during training
     metricsCollector = MetricsCollector(
-        model, dl_val, config.settings['max_seq_length'], loss, config.settings['model_name']
+        model, dl_val, config.settings[model_name]['max_seq_length'], 
+        loss, model_name
     )
     trainOutputWriter = TrainOutputWriter(metricsCollector)
 

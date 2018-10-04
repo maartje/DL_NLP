@@ -20,14 +20,6 @@ filepaths = {
     'targets_test' : 'data/preprocess/targets_test_indices.pt',
     'targets_dictionaries' : 'data/preprocess/targets_dictionaries.pt', 
 
-    # output train
-    'epoch_metrics' : 'data/train/epoch_metrics.pt',
-    'model' : 'data/train/model.pt',
-
-    # output predict
-    'predictions_train' : 'data/predict/test.pt',
-    'predictions_test'  : 'data/predict/train.pt',
-
     # output evaluate
     'naive_bayes_accuracies' : 'data/evaluate/naive_bayes_accuracies.pt',
     'plot_epoch_losses' : 'data/evaluate/plot_epoch_losses.png',
@@ -40,31 +32,85 @@ filepaths = {
 
 settings = {
     # preprocess
-    'model_name': 'rnn', #or rnn
-    'model' : 'word', #or char
-#    'model_name': 'cnn', #or rnn
-#    'model' : 'char', #or word
+    'model_name': 'cnn_word', #or rnn
     'language_filter' : 'test',
     'min_occurrence' : 10,
     'PAD_index' : 0, # DO NOT CHANGE THIS!
     # train
     'val_train_ratio' : 0.1,
     'use_all_fragments' : True, # warning: if this setting is True and characters are used: each fragement results in many sub fragments (use GPU) 
-    'max_seq_length' : 25, 
     'check_equal_seq_length' : False, # use True for now since padding is not supported yet in accuracy calculation
-    'rnn' : {
+    
+    'rnn_word' : {
+        'model': 'word',
         'batch_size' : 128,
         'learning_rate' : 0.005,
         'epochs' : 30,
         'hidden_size' : 256,
-        'drop_out' : 0.3
+        'drop_out' : 0.3,
+        'max_seq_length': 25,
+
+        # output train
+        'epoch_metrics': 'data/train/rnn_word_epoch_metrics.pt',
+        'model_path': 'data/train/rnn_word_model.pt',
+
+        # output predict
+        'predictions_train': 'data/predict/rnn_word_test.pt',
+        'predictions_test': 'data/predict/rnn_word_train.pt',
     },
-    'cnn': {
+
+    'rnn_char': {
+        'model': 'char',
+        'batch_size': 128,
+        'learning_rate': 0.005,
+        'epochs': 20,
+        'hidden_size': 256,
+        'drop_out': 0.3,
+        'max_seq_length': 50,
+
+        # output train
+        'epoch_metrics': 'data/train/rnn_char_epoch_metrics.pt',
+        'model_path': 'data/train/rnn_char_model.pt',
+
+        # output predict
+        'predictions_train': 'data/predict/rnn_char_test.pt',
+        'predictions_test': 'data/predict/rnn_char_train.pt',
+    },
+
+    'cnn_word': {
+        'model': 'word',
         'batch_size': 512,
         'learning_rate': 0.001,
         'epochs': 20,
         'hidden_size': 128,
-        'drop_out': 0.5
+        'drop_out': 0.5,
+        'max_seq_length': 10,
+
+        # output train
+        'epoch_metrics': 'data/train/cnn_word_epoch_metrics.pt',
+        'model_path': 'data/train/cnn_word_model.pt',
+
+        # output predict
+        'predictions_train': 'data/predict/cnn_word_test.pt',
+        'predictions_test': 'data/predict/cnn_word_train.pt',
+    },
+
+    'cnn_char': {
+        'model': 'char',
+        'batch_size': 256,
+        'learning_rate': 0.0005,
+        'epochs': 120,
+        'hidden_size': 128,
+        'drop_out': 0.5,
+        'max_seq_length': 50,
+        
+        # output train
+        'epoch_metrics': 'data/train/cnn_char_epoch_metrics.pt',
+        'model_path': 'data/train/cnn_char_model.pt',
+
+        # output predict
+        'predictions_train': 'data/predict/cnn_char_test.pt',
+        'predictions_test': 'data/predict/cnn_char_train.pt',
     }
 
     # predict

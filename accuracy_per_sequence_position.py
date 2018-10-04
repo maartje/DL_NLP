@@ -1,3 +1,5 @@
+import numpy.ma as ma
+
 import preprocess
 import config
 import torch
@@ -6,8 +8,6 @@ from src.reporting.metrics import calculate_accuracy
 from src.io.dataset_language_identification import DatasetLanguageIdentification, collate_seq_vectors
 from torch.utils import data
 from src.preprocess.tokenizer import CharacterTokenizer, WordTokenizer
-
-import numpy.ma as ma
 
 def build_dataloader(fpath_vectors, fpath_labels, n):
     PAD_index = config.settings['PAD_index']
@@ -39,8 +39,7 @@ def main():
         model = torch.load(config.filepaths['model'])
 
         (log_probs_test, targets_test, _) = predict(model, dl_test, n, config.settings['model_name'])
-        accuracy_test  = accuracy_of_last(log_probs_test.numpy(), targets_test.numpy()) #calculate_accuracy(log_probs_test.numpy(), targets_test.numpy(), t_axis=0)
-        print(accuracy_test)
+        accuracy_test  = accuracy_of_last(log_probs_test.numpy(), targets_test.numpy())
         results.append(accuracy_test)
         print(f"position {n}: {accuracy_test}")
 
@@ -62,5 +61,35 @@ def accuracy_of_last(log_probs, targets):
     results = last_predictions == last_targets
     return sum(results)/len(results)
 
+
+
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
