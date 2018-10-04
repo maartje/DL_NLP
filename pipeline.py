@@ -1,8 +1,16 @@
+import numpy as np
+import torch
+import random
+
 import preprocess
 import train
 import predict
 import evaluate
 import tf_idf_baseline
+
+random.seed(42)
+np.random.seed(42)
+torch.random.manual_seed(42)
 
 def main():
     print('*****************\n* preprocessing *\n*****************')

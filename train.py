@@ -21,6 +21,7 @@ def main():
     batch_size = config.settings[model_name]['batch_size']
 
     
+    print("model: ", config.settings['model'])
     print("model name: ", model_name)
     print("batch size: ", batch_size)
     print("max length: ", config.settings['max_seq_length'])
@@ -67,15 +68,17 @@ def main():
 
     # initialize train settings for the model
     learning_rate = config.settings[model_name]['learning_rate']
-    if model_name == 'rnn':
-        loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
-    if model_name == 'cnn':
-        loss = nn.functional.cross_entropy
+
+    # if model_name == 'rnn':
+    loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target value 0
+    # elif model_name == 'cnn':
+        # loss = nn.functional.cross_entropy
+
     optimizer = optim.Adam(model.parameters(), lr = learning_rate)
     epochs = config.settings[model_name]['epochs']
 
     #gitoptimizer = optim.SGD(model.parameters(), lr = learning_rate)
-    optimizer = optim.Adam(model.parameters(), lr = 0.001)
+    #optimizer = optim.Adam(model.parameters(), lr = 0.001)
 
 
     # collect information during training

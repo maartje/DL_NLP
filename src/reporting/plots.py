@@ -46,6 +46,8 @@ def plot_confusion_matrix(confusion_matrix, languages_idxs, counts, id2lang, fna
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
     """
+    plt.figure(figsize=(len(languages_idxs[0]), len(languages_idxs[1])))
+
     plt.imshow(confusion_matrix, interpolation='nearest', cmap=plt.cm.Blues)
     plt.colorbar()
 
