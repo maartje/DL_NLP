@@ -13,6 +13,8 @@ class ModelSaver():
         if last_val_acc == max_val_acc:
             torch.save(self.model, self.fpath_model)
             print (f"best model so far saved")
+        else:
+            print()
                 
 
 

@@ -63,6 +63,7 @@ def main():
         model = LanguageRecognitionRNN(vocab_size, hidden_size, output_size, PAD_index, drop_out)
     if model_name == 'cnn':
         model = LanguageRecognitionCNN(vocab_size, hidden_size, output_size, PAD_index, drop_out)
+    # model = torch.load('data/train/model.pt')
 
     # initialize train settings for the model
     learning_rate = config.settings[model_name]['learning_rate']
