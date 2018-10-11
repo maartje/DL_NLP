@@ -22,8 +22,6 @@ class LanguageRecognitionRNN(nn.Module):
         output = self.dropout_embedding(self.embedding(input_data))
         packed = pack_padded_sequence (
             output, seq_lengths, batch_first=True)
-        
-        self.lstm.flatten_parameters()
         output, hidden = self.lstm(packed)
         unpacked = pad_packed_sequence(
             output, batch_first=True, padding_value=self.pad_index, total_length=None)

@@ -21,21 +21,20 @@ class TestTrain(unittest.TestCase):
         train.main()
 
         step_size = 20 # robustness: make sure train loss decreases after 20 epochs
-        model_name = config.settings['model_name']
-        train_losses = mfs.mocked_file_storage[config.settings[model_name]['epoch_metrics']]['train_losses']
+        train_losses = mfs.mocked_file_storage[config.filepaths['epoch_metrics']]['train_losses']
         train_losses_step = train_losses[::step_size]
         is_decreasing = lambda l: all(l[i] > l[i+1] for i in range(len(l)-1))
         self.assertTrue(is_decreasing(train_losses_step))
 
 
     def configure_for_testing(self):
-        model_name = 'rnn_char'
-        config.settings['model_name'] = model_name
+        config.settings['model'] = 'char'
+        config.settings['model_name'] = 'rnn'
         config.settings['check_equal_seq_length'] = False
-        config.settings[model_name]['hidden_size'] = 256
-        config.settings[model_name]['drop_out'] = 0.3
-        config.settings[model_name]['learning_rate'] = 1.
-        config.settings[model_name]['epochs'] = 61
+        config.settings['rnn']['hidden_size'] = 256
+        config.settings['rnn']['drop_out'] = 0.3
+        config.settings['rnn']['learning_rate'] = 0.05
+        config.settings['rnn']['epochs'] = 61
         torch.manual_seed(7)
 
 

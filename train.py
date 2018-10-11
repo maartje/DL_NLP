@@ -25,10 +25,10 @@ def main():
     model_name = config.settings['model_name']
     batch_size = config.settings[model_name]['batch_size']
 
-    print("model: ", config.settings[model_name]['model'])
+    print("model: ", config.settings['model'])
     print("model name: ", model_name)
     print("batch size: ", batch_size)
-    print("max length: ", config.settings[model_name]['max_seq_length'])
+    print("max length: ", config.settings['max_seq_length'])
     print("learning_rate", config.settings[model_name]['learning_rate'])
     print("number of classes: ", len(config.language_filters['test']))
 
@@ -36,7 +36,7 @@ def main():
     ds = DatasetLanguageIdentification(
         fpath_vectors_train,
         fpath_labels_train,
-        config.settings[model_name]['max_seq_length']
+        config.settings['max_seq_length']
     )
 
     dl_params_train = {
@@ -56,8 +56,7 @@ def main():
     train_size = len(ds) - val_size
 
     ds_train, ds_val = random_split(
-        ds, [train_size, val_size]
-    )
+        ds, [train_size, val_size])
 
     dl_train = data.DataLoader(ds_train, **dl_params_train)
     dl_val = data.DataLoader(ds_val, **dl_params_val)
@@ -69,9 +68,10 @@ def main():
     output_size = len(torch.load(config.filepaths['targets_dictionaries'], device)[0])
     drop_out = config.settings[model_name]['drop_out']
 
-    if 'rnn' in model_name:
-        model = LanguageRecognitionRNN(vocab_size, hidden_size, output_size, PAD_index, drop_out)
-    if 'cnn' in model_name:
+    if model_name == 'rnn':
+        model = LanguageRecognitionRNN(
+            vocab_size, hidden_size, output_size, PAD_index, drop_out)
+    if model_name == 'cnn':
         model = LanguageRecognitionCNN(vocab_size, hidden_size, output_size, PAD_index, drop_out)
     
     # model = torch.load('data/train/model.pt')
@@ -91,11 +91,11 @@ def main():
 
     # collect information during training
     metricsCollector = MetricsCollector(
-        model, dl_val, config.settings[model_name]['max_seq_length'], loss, model_name
+        model, dl_val, config.settings['max_seq_length'], loss, model_name
     )
     trainOutputWriter = TrainOutputWriter(metricsCollector)
 
-    modelSaver = ModelSaver(model, metricsCollector, config.settings[model_name]['model_path'])
+    modelSaver = ModelSaver(model, metricsCollector, config.filepaths['model'])
 
     # fit the model
     fit(model, dl_train, loss, optimizer, epochs, model_name, torch.device(device), [
@@ -109,7 +109,7 @@ def main():
         'train_losses': metricsCollector.train_losses,
         'val_losses': metricsCollector.val_losses,
         'val_accuracies': metricsCollector.val_accuracies
-    }, config.settings[model_name]['epoch_metrics'])
+    }, config.filepaths['epoch_metrics'])
 
 
 if __name__ == "__main__":

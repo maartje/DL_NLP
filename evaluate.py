@@ -9,16 +9,14 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 def main():
     PAD_index = config.settings['PAD_index']
     targets_dictionaries = torch.load(config.filepaths['targets_dictionaries'])[1]
-    model_name = config.settings['model_name']
-    
-    (log_probs_train, targets_train, lengths) = torch.load(config.settings[model_name]['predictions_train'], device)
-    (log_probs_test, targets_test, lengths) = torch.load(config.settings[model_name]['predictions_test'], device)
+
+    (log_probs_train, targets_train, lengths) = torch.load(config.filepaths['predictions_train'], device)
+    (log_probs_test, targets_test, lengths) = torch.load(config.filepaths['predictions_test'], device)
 
     nll_loss = nn.NLLLoss(ignore_index = PAD_index) # ignores target values for padding
-    train_loss = calculate_loss(log_probs_train, targets_train, nll_loss, model_name)
+    train_loss = calculate_loss(log_probs_train, targets_train, nll_loss, config.settings['model_name'])
     test_loss = calculate_loss(
-        log_probs_test, targets_test, nll_loss, model_name
-    )
+        log_probs_test, targets_test, nll_loss, config.settings['model_name'])
 
     accuracy_test_avg  = calculate_accuracy(log_probs_test.cpu().numpy(), targets_test.cpu().numpy())
     accuracy_train_avg  = calculate_accuracy(log_probs_train.cpu().numpy(), targets_train.cpu().numpy())
@@ -34,8 +32,7 @@ def main():
 
     print(accuracy_test)
 
-    fpath = f"test_accuracies_{model_name}.txt"
-    
+    fpath = f"test_accuracies_{config.settings['model_name']}_{config.settings['model']}.txt"
     with open(fpath, 'w') as f_out:
         print(accuracy_test, file=f_out)
 
@@ -44,8 +41,10 @@ def main():
     confusion_matrix_train, languages_idxs_train = calculate_confusion_matrix(log_probs_train.cpu().numpy(), 
                                                                             targets_train.cpu().numpy())
 
-    epoch_metrics = torch.load(config.settings[model_name]['epoch_metrics'])
+    epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
 
+    epoch_metrics = torch.load(config.filepaths['epoch_metrics'])
+    
     plot_epoch_losses(
         epoch_metrics['train_losses'], 
         epoch_metrics['val_losses'], 
@@ -53,28 +52,25 @@ def main():
     )
     plot_epoch_accuracies(
         epoch_metrics['val_accuracies'], 
-        config.filepaths['plot_epoch_accuracies']
-    )
+        config.filepaths['plot_epoch_accuracies'])
 
     plot_accuracy_per_position(
         [accuracy_test, accuracy_train],
-        [f'{model_name} test', f'{model_name} train'],
-        config.filepaths['plot_accuracy_seq_length']
-    )
-
+        ['RNN test', 'RNN train'], 
+        config.filepaths['plot_accuracy_seq_length'])
+        
     naive_bayes_accuracies = torch.load(config.filepaths['naive_bayes_accuracies'])
 
-    if 'word' in config.settings['model_name']:
+    if config.settings['model'] == 'word':
         plot_accuracy_per_position(
             [accuracy_test, naive_bayes_accuracies['word']],
             ['RNN', 'NB'], 
             config.filepaths['plot_accuracy_model_comparison'])
     else :
         plot_accuracy_per_position(
-            [ 
-                accuracy_test, 
-                naive_bayes_accuracies['char_word_features'],
-                naive_bayes_accuracies['char_char_features']
+            [ accuracy_test, 
+              naive_bayes_accuracies['char_word_features'],
+              naive_bayes_accuracies['char_char_features']
             ],
             ['RNN', 'NB-words', 'NB-chars'], 
             config.filepaths['plot_accuracy_model_comparison']

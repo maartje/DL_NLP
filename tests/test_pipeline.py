@@ -18,13 +18,12 @@ class TestPipeline(unittest.TestCase):
         pipeline.main()
 
     def configure_for_testing(self):
-        model_name = 'rnn_char'
-        config.settings['model_name'] = model_name
-        config.settings[model_name]['model'] = 'char'
+        config.settings['model'] = 'char'
+        config.settings['model_name'] = 'rnn'
         config.settings['check_equal_seq_length'] = False
-        config.settings[model_name]['batch_size'] = 2
-        config.settings[model_name]['hidden_size'] = 256
-        config.settings[model_name]['drop_out'] = 0.3
-        config.settings[model_name]['learning_rate'] = 1.
-        config.settings[model_name]['epochs'] = 5
+        config.settings['rnn']['batch_size'] = 2
+        config.settings['rnn']['hidden_size'] = 256
+        config.settings['rnn']['drop_out'] = 0.3
+        config.settings['rnn']['learning_rate'] = 1.
+        config.settings['rnn']['epochs'] = 5
 

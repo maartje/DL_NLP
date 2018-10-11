@@ -11,8 +11,7 @@ from src.io.dataset_language_identification import DatasetLanguageIdentification
 fpath_vectors = 'data/preprocess/vectors_train.pt'
 fpath_labels = 'data/preprocess/labels_train.pt'
 
-
-def mock_torch_load(fpath, device='cpu'):
+def mock_torch_load(fpath, device=None):
     if fpath == fpath_vectors:
         return [
             [3,2,7,5,1], # the indices of the tokens in the sentence

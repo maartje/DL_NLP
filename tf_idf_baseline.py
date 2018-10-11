@@ -24,7 +24,6 @@ def main():
     )
 
 def evaluate_naive_bayes(tokenizer, features):
-    model_name = config.settings['model_name']
     # load test and train data
     lang_filter = config.language_filters[config.settings['language_filter']]
     texts_train, targets_train = load_data(
@@ -38,7 +37,7 @@ def evaluate_naive_bayes(tokenizer, features):
 
     texts_train = cut_text_fragments(
         texts_train, 
-        config.settings[model_name]['max_seq_length'], 
+        config.settings['max_seq_length'], 
         tokenizer)
 
     # fit a naive bayes classifier with tf-idf features
@@ -55,7 +54,7 @@ def evaluate_naive_bayes(tokenizer, features):
         predicted = pipeline.predict(texts_cutoff)
         results = (np.array(targets) == predicted)
         return results.sum()/len(results) 
-    n = config.settings[model_name]['max_seq_length']       
+    n = config.settings['max_seq_length']       
     accuracies_test = [
         accuracy_at_position(texts_test, targets_test, n) for n in range(n)
     ]    

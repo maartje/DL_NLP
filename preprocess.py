@@ -102,9 +102,9 @@ def preprocess_texts_max_length(max_length, tokenizer):
 def main():
     lang_filter_setting = config.settings['language_filter']
     lang_filter = config.language_filters[lang_filter_setting]
-    model_name =  config.settings['model_name'] # char or word
+    model =  config.settings['model'] # char or word
 
-    if 'char' in model_name:
+    if model == 'char':
         tokenizer = CharacterTokenizer()
     else:
         tokenizer = WordTokenizer()
@@ -113,7 +113,7 @@ def main():
         config.filepaths['texts_train'], config.filepaths['labels_train'], lang_filter)
     x_test, y_test = load_data(
         config.filepaths['texts_test'], config.filepaths['labels_test'], lang_filter)
-    max_length = config.settings[model_name]['max_seq_length']
+    max_length = config.settings['max_seq_length']
 
 
     #if model == 'word':
