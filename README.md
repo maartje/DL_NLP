@@ -4,7 +4,7 @@ Open a terminal in the directory 'DL_NLP' and follow the steps below.
 
 **Step 1: installation**
 
-* install pytorch, matplotlib
+* install python3, pytorch, matplotlib
 
 **Step 2: create directory structure for output files**
 
