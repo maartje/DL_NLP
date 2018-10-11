@@ -1,6 +1,21 @@
-# Installation
+# Getting started
 
-* install pytorch, matplotlib, ...
+Open a terminal in the directory 'DL_NLP' and follow the steps below.
+
+**Step 1: installation**
+
+* install pytorch, matplotlib
+
+**Step 2: create directory structure for output files**
+
+```console
+$ ./prepare.sh
+```
+
+**Step 3: Dowload input files**
+
+Download the data from https://zenodo.org/record/841984/files/wili-2018.zip?download=1 
+and copy the train and test files to the directory 'data/wili-2018' that is created in the previous step.
 
 # Running the unit tests
 
@@ -11,23 +26,6 @@ $ python -m unittest discover -v
 ```
 
 # Running the pipeline
-
-Open a terminal in the directory 'DL_NLP' and follow the steps below.
-
-**Step 1: create directory structure and prepare input files**
-
-```console
-$ ./prepare.sh
-```
-
-The './prepare.sh' script creates a directory structure that is assumed by the subsequent steps.
-
-**Step 2: Dowload input files**
-
-Download the data from https://zenodo.org/record/841984/files/wili-2018.zip?download=1 
-and copy the train and test files to the directory 'data/wili-2018' that is created in the previous step.
-
-**Step 3: preprocessing, training, prediction and evaluation**
 
 To run the full pipeline, run the command:
 
